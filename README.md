@@ -1,25 +1,25 @@
-# React useModal
+# React use hook modal
 
-React useModal is a headless React Hook library designed to manage modals without including any UI components. This gives developers full control over how their modals look and behave by integrating with any UI framework or custom modal system.
+React use hook modal is a headless React Hook library designed to manage modals without including any UI components. This gives developers full control over how their modals look and behave by integrating with any UI framework or custom modal system.
 
 ## Installation
 
 npm
 
 ```shell
-npm install react-usemodal
+npm install react-use-hook-modal
 ```
 
 yarn
 
 ```shell
-yarn add react-usemodal
+yarn add react-use-hook-modal
 ```
 
 pnpm
 
 ```shell
-pnpm add react-usemodal
+pnpm add react-use-hook-modal
 ```
 
 ## Getting set up
@@ -27,7 +27,7 @@ pnpm add react-usemodal
 To start using react useModal, wrap your application with the ModalProvider.
 
 ```tsx
-import { ModalProvider } from 'react-usemodal';
+import { ModalProvider } from 'react-use-hook-modal';
 
 export default App = ({ children }) {
   return (

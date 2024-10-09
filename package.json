@@ -1,5 +1,5 @@
 {
-  "name": "react-usemodal",
+  "name": "react-use-hook-modal",
   "version": "0.1.0",
   "description": "A React Hook library for declaratively managing modals, eliminating the need for state declarations. Props can be passed directly through function calls, simplifying modal control in your application.",
   "author": "iskkiri",
@@ -53,12 +53,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iskkiri/react-usemodal.git"
+    "url": "https://github.com/iskkiri/react-use-hook-modal.git"
   },
   "bugs": {
-    "url": "https://github.com/iskkiri/react-usemodal/issues"
+    "url": "https://github.com/iskkiri/react-use-hook-modal/issues"
   },
-  "homepage": "https://github.com/iskkiri/react-usemodal#readme",
+  "homepage": "https://github.com/iskkiri/react-use-hook-modal#readme",
   "engines": {
     "node": ">=14.0.0"
   }

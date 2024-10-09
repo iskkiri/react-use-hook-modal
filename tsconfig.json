@@ -4,7 +4,6 @@
     "module": "ESNext",
     "lib": ["dom", "esnext"],
     "declaration": true,
-    "declarationDir": "./dist/types",
     "outDir": "./dist",
     "esModuleInterop": true,
     "skipLibCheck": true,

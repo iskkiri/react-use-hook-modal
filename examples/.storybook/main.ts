@@ -13,5 +13,10 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  refs: {
+    '@chakra-ui/react': {
+      disable: true,
+    },
+  },
 };
 export default config;

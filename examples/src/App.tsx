@@ -1,5 +1,7 @@
+import { ModalProvider } from 'react-use-hook-modal';
+
 function App() {
-  return <>App</>;
+  return <ModalProvider>App</ModalProvider>;
 }
 
 export default App;

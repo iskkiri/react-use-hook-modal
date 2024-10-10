@@ -1,0 +1,50 @@
+.custom-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.custom-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  padding: 20px;
+  width: 360px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+.custom-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.close-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ececec;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}

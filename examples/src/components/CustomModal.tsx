@@ -6,6 +6,7 @@ interface CustomModalProps {
   content: string;
   onClose: () => void;
   onConfirm: () => void;
+  style?: React.CSSProperties;
 }
 
 export default function CustomModal({
@@ -14,12 +15,13 @@ export default function CustomModal({
   content,
   onClose,
   onConfirm,
+  style,
 }: CustomModalProps) {
   return (
     <>
       {isOpen && (
         <div className="custom-modal-overlay">
-          <div className="custom-modal">
+          <div className="custom-modal" style={style}>
             <h1>{title}</h1>
 
             <p>{content}</p>

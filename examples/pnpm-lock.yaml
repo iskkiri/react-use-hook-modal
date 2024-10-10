@@ -2492,7 +2492,7 @@ packages:
       react-dom: '>=16.6.0'
 
   react-use-hook-modal@file:../react-use-hook-modal-0.1.0.tgz:
-    resolution: {integrity: sha512-favUDIS8LFLMO5mhHza88lbST59/PA2xZBIub/q8ZRSKaRnrob2leXtNazhD9QyUn7rLV/dF3CaSXQPN0Evzvg==, tarball: file:../react-use-hook-modal-0.1.0.tgz}
+    resolution: {integrity: sha512-ldoaXNFBqngHVhFLorfWA4muk4Gfy0OCYFx2AqaSLuZQjTXu4xy3Zw7WdRtakqNVypoz4aNEXvFOasNWLt7yWA==, tarball: file:../react-use-hook-modal-0.1.0.tgz}
     version: 0.1.0
     engines: {node: '>=14.0.0'}
     peerDependencies:

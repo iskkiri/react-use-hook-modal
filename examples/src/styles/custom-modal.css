@@ -16,7 +16,7 @@
   border-radius: 8px;
 
   padding: 20px;
-  width: 360px;
+  min-width: 360px;
 
   display: flex;
   flex-direction: column;

@@ -1,0 +1,25 @@
+.modal-enter .custom-modal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.modal-enter-active .custom-modal {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.modal-exit .custom-modal {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-exit-active .custom-modal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
+}

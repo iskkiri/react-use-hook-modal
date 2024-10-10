@@ -1,0 +1,51 @@
+.ReactModal__Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  background: white;
+  width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    transform 300ms ease-in-out,
+    opacity 300ms ease-in-out;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.react-modal .button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.react-modal .close-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ececec;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.react-modal .confirm-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}

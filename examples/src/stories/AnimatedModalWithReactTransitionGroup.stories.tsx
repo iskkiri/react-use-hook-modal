@@ -38,7 +38,7 @@ export const ReactTransitionGroup: Story = {
     const onOpenAnimatedModal = useCallback(() => {
       openAnimatedModalWithReactTransitionGroup({
         title: 'Animated Modal (React Transition Group)',
-        content: 'This is an Animated Modal (React Transition Group)',
+        content: 'Note: TransitionGroup must be set as the container for ModalProvider.',
         onClose: closeAnimatedModalWithReactTransitionGroup,
         onConfirm: () => {
           console.log('Confirmed');

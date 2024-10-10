@@ -42,8 +42,8 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-use-hook-modal:
-        specifier: ^0.1.1
-        version: 0.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.1.2
+        version: 0.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.9.0
@@ -2491,8 +2491,8 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
-  react-use-hook-modal@0.1.1:
-    resolution: {integrity: sha512-Qrysy6TDMhzpwqbnqw2Jzvn8wL26UfHP1wA+sN1Ik4mIxPjMJCwPDa2Gy2U/WWSDvin57yfUqDedvy1jqpD9Rw==}
+  react-use-hook-modal@0.1.2:
+    resolution: {integrity: sha512-cSazmImQDsnYGnRu21/RC0WU8hd7PxdXpqQIYso6APw2hyauVPztDBUoabuEw5x84FVowpDOT+FHa7jTTZMuMQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8.0'
@@ -5405,7 +5405,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-use-hook-modal@0.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-use-hook-modal@0.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

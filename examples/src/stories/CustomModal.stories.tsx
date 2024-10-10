@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ModalProvider } from 'react-use-hook-modal';
 import useCustomModal from '@/hooks/useCustomModal';
 
+import '../styles/stories.css';
+
 const meta = {
   title: 'Examples/CustomModal',
   parameters: {
@@ -39,17 +41,7 @@ export const Example: Story = {
     }, [closeCustomModal, openCustomModal]);
 
     return (
-      <button
-        onClick={onOpenCustomModal}
-        style={{
-          padding: '10px 20px',
-          background: '#007bff',
-          color: '#fff',
-          borderRadius: '4px',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
+      <button onClick={onOpenCustomModal} className="open-button">
         Open Custom Modal
       </button>
     );

@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ModalProvider } from 'react-use-hook-modal';
 import useReactModal from '@/hooks/useReactModal';
 
+import '../styles/stories.css';
+
 const meta = {
   title: 'Examples/ReactModal',
   parameters: {
@@ -39,17 +41,7 @@ export const Example: Story = {
     }, [closeReactModal, openReactModal]);
 
     return (
-      <button
-        onClick={onOpenReactModal}
-        style={{
-          padding: '10px 20px',
-          background: '#007bff',
-          color: '#fff',
-          borderRadius: '4px',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
+      <button onClick={onOpenReactModal} className="open-button">
         Open React Modal
       </button>
     );

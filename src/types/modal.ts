@@ -1,7 +1,3 @@
-export interface ModalInitializedContextType {
-  isInitialized: boolean;
-}
-
 export type ModalKey = string | number;
 
 export interface ModalState<TProps> {
@@ -51,7 +47,6 @@ export type OpenModal<TProps> =
 export type CloseModal = (modalKey?: ModalKey) => void;
 
 export interface UseModalReturn<TProps> {
-  isInitialized: boolean;
   open: OpenModal<TProps>;
   close: CloseModal;
 }

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ModalDispatchContext, ModalInitializedContext, ModalStateContext } from './ModalContext';
+import React, { useCallback, useMemo, useState } from 'react';
+import { ModalDispatchContext, ModalStateContext } from './ModalContext';
 import type { ModalKey, ModalState, OpenParams } from '../types/modal';
 import Modals from '../components/Modals';
 
@@ -33,13 +33,8 @@ export default function ModalProvider({
   container,
   clearTime = 3000,
 }: ModalProviderProps) {
-  const [initialized, setInitialized] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [modals, setModals] = useState<ModalState<any>[]>([]);
-
-  useEffect(() => {
-    setInitialized(true);
-  }, []);
 
   const openModal = useCallback(
     <TProps,>({ Component, props, key, portalTarget }: OpenParams<TProps>) => {
@@ -80,18 +75,15 @@ export default function ModalProvider({
     [clearTime]
   );
 
-  const isInitialized = useMemo(() => ({ isInitialized: initialized }), [initialized]);
   const dispatch = useMemo(() => ({ openModal, closeModal }), [openModal, closeModal]);
 
   return (
-    <ModalInitializedContext.Provider value={isInitialized}>
-      <ModalStateContext.Provider value={{ modals }}>
-        <ModalDispatchContext.Provider value={dispatch}>
-          {children}
+    <ModalStateContext.Provider value={{ modals }}>
+      <ModalDispatchContext.Provider value={dispatch}>
+        {children}
 
-          <Modals container={container} />
-        </ModalDispatchContext.Provider>
-      </ModalStateContext.Provider>
-    </ModalInitializedContext.Provider>
+        <Modals container={container} />
+      </ModalDispatchContext.Provider>
+    </ModalStateContext.Provider>
   );
 }

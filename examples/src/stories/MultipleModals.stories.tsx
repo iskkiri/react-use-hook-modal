@@ -37,11 +37,9 @@ export const Example: Story = {
       }));
     }, []);
 
-    const { isInitialized, openCustomModal, closeCustomModal } = useCustomModal();
+    const { openCustomModal, closeCustomModal } = useCustomModal();
 
     useEffect(() => {
-      if (!isInitialized) return;
-
       popUpList.forEach((popUp) => {
         openCustomModal(
           {
@@ -64,7 +62,7 @@ export const Example: Story = {
           }
         );
       });
-    }, [closeCustomModal, isInitialized, openCustomModal, popUpList]);
+    }, [closeCustomModal, openCustomModal, popUpList]);
 
     useEffect(() => {
       if (reRender) {

@@ -3,7 +3,7 @@ import { ModalStateContext } from '../contexts/ModalContext';
 import ModalItem from './ModalItem';
 
 interface ModalProps {
-  container?: React.ComponentType<React.PropsWithChildren>;
+  container?: React.ComponentType<{ children: React.ReactNode }>;
 }
 
 export default function Modals({ container: Container = React.Fragment }: ModalProps) {

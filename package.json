@@ -26,6 +26,8 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
   },
@@ -38,19 +40,24 @@
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
+    "@vitest/coverage-v8": "^2.1.2",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "jsdom": "^25.0.1",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.24.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.7.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

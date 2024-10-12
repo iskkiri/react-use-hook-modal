@@ -19,5 +19,12 @@ export default defineConfig({
       sourcemap: true,
     },
   ],
-  plugins: [peerDepsExternal(), typescript({ tsconfig: './tsconfig.json' }), terser()],
+  plugins: [
+    peerDepsExternal(),
+    typescript({
+      tsconfig: './tsconfig.json',
+      exclude: ['**/__tests__/**', '**/*.test.ts', '**/*.test.tsx'],
+    }),
+    terser(),
+  ],
 });

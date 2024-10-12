@@ -27,3 +27,6 @@ dist-ssr
 *.tgz
 
 *storybook.log
+
+# Coverage reports
+coverage/

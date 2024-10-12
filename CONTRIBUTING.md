@@ -28,8 +28,14 @@ Fork the repository and create a branch for your feature/bug fix.
 
 Here's what each part of the commit message means:
 
-\<type>: The type of change that you're committing. Valid types include feat for new features, fix for bug fixes, docs for documentation changes, and chore for changes that don't affect the code itself (e.g. updating dependencies).
-\<subject>: A short description of the change.
+- \<type>: The type of change that you’re committing. Valid types include:
+  - feat: For new features
+  - refactor: For restructuring existing code without changing its external behavior (e.g. code cleanup or optimization)
+  - fix: For bug fixes
+  - docs: For documentation changes
+  - chore: For changes that don’t affect the code itself (e.g. updating dependencies)
+  - test: For adding or updating tests
+- \<subject>: A short description of the change.
 
 ## Code Style and Linting
 

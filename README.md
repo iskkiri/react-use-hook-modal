@@ -1,5 +1,7 @@
 # react-use-hook-modal
 
+![npm](https://img.shields.io/npm/v/react-use-hook-modal) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-use-hook-modal) ![Test](https://github.com/iskkiri/react-use-hook-modal/actions/workflows/test.yml/badge.svg) ![NPM License](https://img.shields.io/npm/l/react-use-hook-modal)
+
 `react-use-hook-modal` is a headless React Hook library designed to declaratively manage modals without including any UI components. This allows developers to fully control how their modals look and behave by integrating with any UI framework or custom modal system.
 
 ## Features

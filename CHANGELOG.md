@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.0.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.0...v1.0.1) (2024-10-13)
+
+### Documentation
+
+* update CHANGELOG.md (duplicated v1.0.0) ([5f1c6fe](https://github.com/iskkiri/react-use-hook-modal/commit/5f1c6fe5a596155975f203d9574b941b327ab879))
+
 ## 1.0.0 (2024-10-13)
 
 ### Features

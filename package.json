@@ -22,12 +22,13 @@
     }
   },
   "type": "module",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest --coverage",
     "format": "prettier --write .",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
   },

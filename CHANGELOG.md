@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.0.2](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.1...v1.0.2) (2024-10-13)
+
+### Bug Fixes
+
+* ModalProvider container type ([41c1edc](https://github.com/iskkiri/react-use-hook-modal/commit/41c1edc6be0ca3543db89e26301a3a6a8cba4d60))
+
 ## [1.0.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.0...v1.0.1) (2024-10-13)
 
 ### Documentation

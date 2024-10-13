@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { ModalStateContext } from '../../contexts/ModalContext';
 import Modals from '../../components/Modals';
 import type { ModalState } from '../../types/modal';
+import { modals } from '../test-utils';
 
 // Mock ModalItem to isolate testing of Modals component
 vi.mock('../../components/ModalItem', () => ({
@@ -18,15 +19,6 @@ vi.mock('../../components/ModalItem', () => ({
 
 describe('Modals Component', () => {
   it('renders modals from the context', () => {
-    const modals = [
-      {
-        Component: ({ message }: { message: string }) => <div>{message}</div>,
-        props: { message: 'Hello World' },
-        key: 'modal1',
-        portalTarget: null,
-      },
-    ] satisfies ModalState[];
-
     render(
       <ModalStateContext.Provider value={{ modals }}>
         <Modals modals={modals} />

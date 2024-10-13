@@ -50,7 +50,13 @@ pnpm format
 
 ## Testing
 
-Make sure all tests pass before submitting a PR:
+react-use-hook-modal uses Vitest for testing. Please ensure that your changes are covered by tests, and that all tests pass before submitting your pull request.
+
+You can run the tests with the test task:
+
+```
+pnpm test
+```
 
 ```shell
 pnpm test

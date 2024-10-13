@@ -33,20 +33,19 @@ export default function ModalProvider({
   container,
   clearTime = 3000,
 }: ModalProviderProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [modals, setModals] = useState<ModalState<any>[]>([]);
+  const [modals, setModals] = useState<ModalState[]>([]);
 
   const openModal = useCallback(
     <TProps,>({ Component, props, key, portalTarget }: OpenParams<TProps>) => {
       const propsWithIsOpen = { ...props, isOpen: true };
 
       setModals((modals) => {
-        const existingModal = modals.find((modal) => modal.key === key);
+        const targetIndex = modals.findIndex((modal) => modal.key === key);
 
-        if (existingModal) {
-          return modals.map((modal) =>
-            modal.key === key ? { ...modal, props: propsWithIsOpen } : modal
-          );
+        if (targetIndex !== -1) {
+          const updatedModals = [...modals];
+          updatedModals[targetIndex] = { ...updatedModals[targetIndex], props: propsWithIsOpen };
+          return updatedModals;
         }
 
         return [...modals, { Component, props: propsWithIsOpen, key, portalTarget }];
@@ -82,7 +81,7 @@ export default function ModalProvider({
       <ModalDispatchContext.Provider value={dispatch}>
         {children}
 
-        <Modals container={container} />
+        <Modals container={container} modals={modals} />
       </ModalDispatchContext.Provider>
     </ModalStateContext.Provider>
   );

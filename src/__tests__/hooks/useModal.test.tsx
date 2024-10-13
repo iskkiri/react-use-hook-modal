@@ -41,7 +41,7 @@ describe('useModal', () => {
       result.current.close();
     });
 
-    expect(mockCloseModal).toHaveBeenCalledWith(expect.any(String)); // 생성된 key로 닫힘
+    expect(mockCloseModal).toHaveBeenCalledWith(expect.any(String));
   });
 
   it('should use the provided key if options.key is specified', () => {
@@ -70,7 +70,6 @@ describe('useModal', () => {
       result.current.close('custom-key');
     });
 
-    // closeModal이 제공된 key로 호출되었는지 확인
     expect(mockCloseModal).toHaveBeenCalledWith('custom-key');
   });
 

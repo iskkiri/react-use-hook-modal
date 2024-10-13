@@ -48,7 +48,7 @@ export const Example: Story = {
             onClose: () => closeCustomModal(popUp.id),
             onConfirm: () => {
               console.log('Confirmed');
-              closeCustomModal();
+              closeCustomModal(popUp.id);
             },
             style: {
               transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,
@@ -74,7 +74,7 @@ export const Example: Story = {
               onClose: () => closeCustomModal(popUp.id),
               onConfirm: () => {
                 console.log('Confirmed');
-                closeCustomModal();
+                closeCustomModal(popUp.id);
               },
               style: {
                 transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ModalStateContext } from '../../contexts/ModalContext';
@@ -11,7 +10,8 @@ vi.mock('../../components/ModalItem', () => ({
     component: Component,
     props,
   }: {
-    component: React.ComponentType<any>;
+    component: React.ComponentType;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     props: any;
   }) => <div>{Component && <Component {...props} />}</div>,
 }));
@@ -25,11 +25,11 @@ describe('Modals Component', () => {
         key: 'modal1',
         portalTarget: null,
       },
-    ] satisfies ModalState<any>[];
+    ] satisfies ModalState[];
 
     render(
       <ModalStateContext.Provider value={{ modals }}>
-        <Modals />
+        <Modals modals={modals} />
       </ModalStateContext.Provider>
     );
 
@@ -44,7 +44,7 @@ describe('Modals Component', () => {
         key: 'modal2',
         portalTarget: null,
       },
-    ] satisfies ModalState<any>[];
+    ] satisfies ModalState[];
 
     const CustomContainer = ({ children }: { children: React.ReactNode }) => (
       <div data-testid="custom-container">{children}</div>
@@ -52,7 +52,7 @@ describe('Modals Component', () => {
 
     render(
       <ModalStateContext.Provider value={{ modals }}>
-        <Modals container={CustomContainer} />
+        <Modals container={CustomContainer} modals={modals} />
       </ModalStateContext.Provider>
     );
 
@@ -61,11 +61,11 @@ describe('Modals Component', () => {
   });
 
   it('renders no modals if context is empty', () => {
-    const modals: any[] = [];
+    const modals: ModalState[] = [];
 
     render(
       <ModalStateContext.Provider value={{ modals }}>
-        <Modals />
+        <Modals modals={modals} />
       </ModalStateContext.Provider>
     );
 

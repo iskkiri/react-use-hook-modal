@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { ModalStateContext } from '../contexts/ModalContext';
+import React from 'react';
 import ModalItem from './ModalItem';
+import type { ModalState } from '../types/modal';
 
-interface ModalProps {
-  container?: React.ComponentType<{ children: React.ReactNode }>;
+interface ModalsProps {
+  modals: ModalState[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  container?: React.ComponentType<any>;
 }
 
-export default function Modals({ container: Container = React.Fragment }: ModalProps) {
-  const { modals } = useContext(ModalStateContext);
-
+export default function Modals({ container: Container = React.Fragment, modals }: ModalsProps) {
   return (
     <Container>
       {modals.map((modal) => {

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalItemProps {
-  component: React.ComponentType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: React.ComponentType<any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: any;
   portalTarget?: HTMLElement | null;

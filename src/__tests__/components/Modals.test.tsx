@@ -5,7 +5,6 @@ import Modals from '../../components/Modals';
 import type { ModalState } from '../../types/modal';
 import { modals } from '../test-utils';
 
-// Mock ModalItem to isolate testing of Modals component
 vi.mock('../../components/ModalItem', () => ({
   default: ({
     component: Component,
@@ -29,15 +28,6 @@ describe('Modals Component', () => {
   });
 
   it('renders using a custom container', () => {
-    const modals = [
-      {
-        Component: ({ message }: { message: string }) => <div>{message}</div>,
-        props: { message: 'Custom Container Modal' },
-        key: 'modal2',
-        portalTarget: null,
-      },
-    ] satisfies ModalState[];
-
     const CustomContainer = ({ children }: { children: React.ReactNode }) => (
       <div data-testid="custom-container">{children}</div>
     );
@@ -48,8 +38,9 @@ describe('Modals Component', () => {
       </ModalStateContext.Provider>
     );
 
+    const customContainer = screen.getByTestId('custom-container');
     expect(screen.getByTestId('custom-container')).toBeInTheDocument();
-    expect(screen.getByText('Custom Container Modal')).toBeInTheDocument();
+    expect(customContainer).toContainElement(screen.getByText('Hello World'));
   });
 
   it('renders no modals if context is empty', () => {

@@ -18,9 +18,7 @@ describe('useModal', () => {
   it('should open the modal when open is called', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
 
-    act(() => {
-      result.current.open({ isOpen: true });
-    });
+    act(() => result.current.open({ isOpen: true }));
 
     expect(mockOpenModal).toHaveBeenCalledWith({
       Component: TestModalComponent,
@@ -33,13 +31,9 @@ describe('useModal', () => {
   it('should close the modal when close is called', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
 
-    act(() => {
-      result.current.open({ isOpen: true });
-    });
+    act(() => result.current.open({ isOpen: true }));
 
-    act(() => {
-      result.current.close();
-    });
+    act(() => result.current.close());
 
     expect(mockCloseModal).toHaveBeenCalledWith(expect.any(String));
   });
@@ -47,9 +41,7 @@ describe('useModal', () => {
   it('should use the provided key if options.key is specified', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
 
-    act(() => {
-      result.current.open({ isOpen: true }, { key: 'custom-key' });
-    });
+    act(() => result.current.open({ isOpen: true }, { key: 'custom-key' }));
 
     expect(mockOpenModal).toHaveBeenCalledWith({
       Component: TestModalComponent,
@@ -62,13 +54,9 @@ describe('useModal', () => {
   it('should call closeModal with the provided key if specified', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
 
-    act(() => {
-      result.current.open({ isOpen: true }, { key: 'custom-key' });
-    });
+    act(() => result.current.open({ isOpen: true }, { key: 'custom-key' }));
 
-    act(() => {
-      result.current.close('custom-key');
-    });
+    act(() => result.current.close('custom-key'));
 
     expect(mockCloseModal).toHaveBeenCalledWith('custom-key');
   });
@@ -77,9 +65,7 @@ describe('useModal', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
     const portalTarget = document.createElement('div');
 
-    act(() => {
-      result.current.open({ isOpen: true }, { portalTarget });
-    });
+    act(() => result.current.open({ isOpen: true }, { portalTarget }));
 
     expect(mockOpenModal).toHaveBeenCalledWith({
       Component: TestModalComponent,

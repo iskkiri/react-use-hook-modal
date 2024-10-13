@@ -17,7 +17,8 @@ interface ModalProviderProps {
    * can be integrated to handle modal animations. Users can set their own container
    * to manage the way modals are rendered and animated.
    */
-  container?: React.ComponentType<{ children: React.ReactNode }>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  container?: React.ComponentType<any>;
 
   /**
    * The time in milliseconds before a modal is fully removed from the DOM after closing.

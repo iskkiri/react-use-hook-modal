@@ -141,7 +141,7 @@ The `useModalsState` hook returns the current state of modals.
 
 ## Contributing
 
-Contributions are welcome! Please check the [CONTRIBUTING.md](https://github.com/iskkiri/react-use-hook-modal#contributing) for details on how to get involved and contribute to this project.
+Contributions are welcome! Please check the [CONTRIBUTING.md](https://github.com/iskkiri/react-use-hook-modal/blob/main/CONTRIBUTING.md) for details on how to get involved and contribute to this project.
 
 ## Compatibility
 

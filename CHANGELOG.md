@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.0.3](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.2...v1.0.3) (2024-10-13)
+
+### Documentation
+
+* update README.md - CONTRIBUTING.md link ([c1b42b5](https://github.com/iskkiri/react-use-hook-modal/commit/c1b42b5bb8ac5c27ce320db33978db76c9d59276))
+
 ## [1.0.2](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.1...v1.0.2) (2024-10-13)
 
 ### Bug Fixes

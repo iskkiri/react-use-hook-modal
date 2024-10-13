@@ -1,6 +1,7 @@
 export type ModalKey = string | number;
 
-export interface ModalState<TProps> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface ModalState<TProps = any> {
   Component: React.ComponentType<TProps>;
   props: TProps & { isOpen: boolean };
   key: ModalKey;
@@ -8,8 +9,7 @@ export interface ModalState<TProps> {
 }
 
 export interface ModalStateContextType {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  modals: ModalState<any>[];
+  modals: ModalState[];
 }
 
 export interface OpenParams<TProps> {

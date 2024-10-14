@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ModalDispatchContext, ModalStateContext } from './ModalContext';
 import type { ModalKey, ModalState, OpenParams } from '../types/modal';
 import Modals from '../components/Modals';
@@ -27,14 +27,52 @@ interface ModalProviderProps {
    * Defaults to 3000 milliseconds (3 seconds).
    */
   clearTime?: number;
+  /**
+   * A callback function that is triggered immediately after any modal is opened.
+   * This callback applies globally to all modals within the provider. It provides the
+   * currently opened modal's state as a parameter, allowing for specific actions like
+   * setting focus or starting animations based on the opened modal.
+   * @param modal - The state of the modal that was just opened.
+   */
+  onAfterOpen?: (modal: ModalState) => void;
+
+  /**
+   * A callback function that is triggered immediately after any modal is closed.
+   * This callback applies globally to all modals within the provider. It provides the
+   * closed modal's state as a parameter, which can be useful for cleanup tasks or
+   * resetting modal-specific state.
+   * @param modal - The state of the modal that was just closed.
+   */
+  onAfterClose?: (modal: ModalState) => void;
 }
 
 export default function ModalProvider({
   children,
   container,
   clearTime = 3000,
+  onAfterOpen,
+  onAfterClose,
 }: ModalProviderProps) {
   const [modals, setModals] = useState<ModalState[]>([]);
+  const prevModalsRef = useRef<ModalState[]>([]);
+
+  useEffect(() => {
+    const prevModals = prevModalsRef.current;
+
+    modals.forEach((modal) => {
+      const prevModal = prevModals.find((m) => m.key === modal.key);
+
+      if ((!prevModal || !prevModal.props.isOpen) && modal.props.isOpen && onAfterOpen) {
+        onAfterOpen(modal);
+      }
+
+      if (prevModal && !modal.props.isOpen && prevModal.props.isOpen && onAfterClose) {
+        onAfterClose(modal);
+      }
+    });
+
+    prevModalsRef.current = modals;
+  }, [modals, onAfterOpen, onAfterClose]);
 
   const openModal = useCallback(
     <TProps,>({ Component, props, key, portalTarget }: OpenParams<TProps>) => {

@@ -95,11 +95,13 @@ const App = ({ children }) => {
 
 ### ModalProvider
 
-| Prop        | Type                  | Default            | Description                                                                                                                                                                                                      |
-| ----------- | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`  | `React.ReactNode`     | **Required**       | The child elements rendered inside the `ModalProvider`. Typically, this is your application that interacts with the modals.                                                                                      |
-| `container` | `React.ComponentType` | `React.Fragment`   | Optional custom container component for rendering modals. Use this to define a custom container, allowing you to integrate modal animations with libraries like React Transition Group.                          |
-| `clearTime` | `number`              | `3000` (3 seconds) | The time in milliseconds before a modal is fully removed from the internal state (`modals`) after closing. This ensures that any exit animations are fully displayed before the modal is removed from the state. |
+| Prop           | Type                          | Default            | Description                                                                                                                                                                                                          |
+| -------------- | ----------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode`             | **Required**       | The child elements rendered inside the `ModalProvider`. Typically, this is your application that interacts with the modals.                                                                                          |
+| `container`    | `React.ComponentType`         | `React.Fragment`   | Optional custom container component for rendering modals. Use this to define a custom container, allowing you to integrate modal animations with libraries like React Transition Group.                              |
+| `clearTime`    | `number`                      | `3000` (3 seconds) | The time in milliseconds before a modal is fully removed from the internal state (`modals`) after closing. This ensures that any exit animations are fully displayed before the modal is removed from the state.     |
+| `onAfterOpen`  | `(modal: ModalState) => void` | `undefined`        | A callback function triggered immediately after any modal is opened. It provides the state of the modal that was just opened. This can be useful for setting focus or starting animations based on the opened modal. |
+| `onAfterClose` | `(modal: ModalState) => void` | `undefined`        | A callback function triggered immediately after any modal is closed. It provides the state of the modal that was just closed, allowing for cleanup tasks or triggering actions based on the closed modal's state.    |
 
 ### useModal
 

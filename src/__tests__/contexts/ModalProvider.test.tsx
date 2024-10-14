@@ -224,4 +224,140 @@ describe('ModalProvider', () => {
       timeout: clearTime + 100,
     });
   });
+
+  it('should call onAfterOpen when the modal is opened', async () => {
+    const onAfterOpen = vi.fn();
+    const TestComponent = () => {
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+
+      return <button onClick={onOpen}>Open Modal</button>;
+    };
+
+    render(
+      <ModalProvider onAfterOpen={onAfterOpen}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    expect(onAfterOpen).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call onAfterClose when the modal is closed', async () => {
+    const onAfterClose = vi.fn();
+    const TestComponent = () => {
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+
+      return <button onClick={onOpen}>Open Modal</button>;
+    };
+
+    render(
+      <ModalProvider onAfterClose={onAfterClose}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    userEvent.click(screen.getByText('Close'));
+
+    await waitFor(() => expect(onAfterClose).toHaveBeenCalledTimes(1));
+  });
+
+  it('should call onAfterOpen twice when modal is reopened before clearTime', async () => {
+    const onAfterOpen = vi.fn();
+    const clearTime = 1000;
+
+    const TestComponent = () => {
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+
+      return <button onClick={onOpen}>Open Modal</button>;
+    };
+
+    render(
+      <ModalProvider clearTime={clearTime} onAfterOpen={onAfterOpen}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    expect(onAfterOpen).toHaveBeenCalledTimes(1);
+
+    userEvent.click(screen.getByText('Close'));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    setTimeout(() => {
+      userEvent.click(screen.getByText('Open Modal'));
+    }, clearTime / 2);
+
+    await waitFor(() => expect(onAfterOpen).toHaveBeenCalledTimes(2));
+  });
+
+  it('should call onAfterOpen with the opened modal state', async () => {
+    const onAfterOpen = vi.fn();
+    const TestComponent = () => {
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(
+        () => open({ onClose: close, title: 'Opened Modal' }),
+        [close, open]
+      );
+
+      return <button onClick={onOpen}>Open Modal</button>;
+    };
+
+    render(
+      <ModalProvider onAfterOpen={onAfterOpen}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    expect(onAfterOpen).toHaveBeenCalledTimes(1);
+    const [modalState] = onAfterOpen.mock.calls[0];
+    expect(modalState.props.title).toBe('Opened Modal');
+    expect(modalState.props.isOpen).toBe(true);
+  });
+
+  it('should call onAfterClose with the closed modal state', async () => {
+    const onAfterClose = vi.fn();
+    const TestComponent = () => {
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(
+        () => open({ onClose: close, title: 'Closed Modal' }),
+        [close, open]
+      );
+
+      return <button onClick={onOpen}>Open Modal</button>;
+    };
+
+    render(
+      <ModalProvider onAfterClose={onAfterClose}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    userEvent.click(screen.getByText('Close'));
+
+    await waitFor(() => expect(onAfterClose).toHaveBeenCalledTimes(1));
+
+    const [modalState] = onAfterClose.mock.calls[0];
+    expect(modalState.props.title).toBe('Closed Modal');
+    expect(modalState.props.isOpen).toBe(false);
+  });
 });

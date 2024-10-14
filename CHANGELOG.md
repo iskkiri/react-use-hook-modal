@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.1.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.3...v1.1.0) (2024-10-14)
+
+### Features
+
+* add onAfterOpen and onAfterClose callbacks to ModalProvider ([3e1bbed](https://github.com/iskkiri/react-use-hook-modal/commit/3e1bbedada19744da83011369c3c8b5858d42714))
+
 ## [1.0.3](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.2...v1.0.3) (2024-10-13)
 
 ### Documentation

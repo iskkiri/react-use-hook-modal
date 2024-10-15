@@ -13,9 +13,11 @@
 
 ## Examples
 
-You can explore the [Storybook examples](https://react-use-hook-modal.vercel.app/?path=%2Fstory%2Fexamples-animation--framer-motion) to see how `react-use-hook-modal` works and can be integrated into various UI frameworks.
+You can explore the [Storybook examples](https://react-use-hook-modal.vercel.app/?path=%2Fstory%2Fexamples-animation--framer-motion) to see how `react-use-hook-modal` works and can be integrated into various UI frameworks. The Storybook environment allows you to interactively test different features like animations and understand how the library behaves in real-world scenarios.
 
-For example code, visit the [examples](https://github.com/iskkiri/react-use-hook-modal/tree/main/examples) in the repository for detailed implementation.
+For hands-on example code, visit the [examples](https://github.com/iskkiri/react-use-hook-modal/tree/main/examples) in the repository for detailed implementation. Each example demonstrates how to use the library with popular UI libraries like Material UI, Bootstrap, and Chakra UI, and even custom modal setups.
+
+You can also view the full list of examples, including live CodeSandbox links, in the [example list](https://github.com/iskkiri/react-use-hook-modal/blob/main/examples/README.md). This provides an easy way to explore and experiment with different use cases directly in your browser.
 
 ## Installation
 

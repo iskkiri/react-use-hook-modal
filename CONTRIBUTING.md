@@ -54,10 +54,6 @@ react-use-hook-modal uses Vitest for testing. Please ensure that your changes ar
 
 You can run the tests with the test task:
 
-```
-pnpm test
-```
-
 ```shell
 pnpm test
 ```

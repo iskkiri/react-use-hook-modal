@@ -26,8 +26,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   render: function Render() {
-    const [reRender, setReRender] = useState(false);
-    const onReRender = useCallback(() => setReRender(true), []);
+    const [isOpen, setIsOpen] = useState(false);
+    const onOpenMultipleModals = useCallback(() => setIsOpen(true), []);
 
     const popUpList = useMemo(() => {
       return [...Array(3)].map((_, i) => ({
@@ -40,32 +40,7 @@ export const Example: Story = {
     const { openCustomModal, closeCustomModal } = useCustomModal();
 
     useEffect(() => {
-      popUpList.forEach((popUp) => {
-        openCustomModal(
-          {
-            title: popUp.title,
-            content: popUp.content,
-            onClose: () => closeCustomModal(popUp.id),
-            onConfirm: () => {
-              console.log('Confirmed');
-              closeCustomModal(popUp.id);
-            },
-            style: {
-              transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,
-            },
-          },
-          {
-            /*****************************************************************************************************************************************
-             * To render multiple modals using the open function returned from useModal, you must manually assign a unique key value for each modal. *
-             *************************************************************************************************************************************** */
-            key: popUp.id,
-          }
-        );
-      });
-    }, [closeCustomModal, openCustomModal, popUpList]);
-
-    useEffect(() => {
-      if (reRender) {
+      if (isOpen) {
         popUpList.forEach((popUp) => {
           openCustomModal(
             {
@@ -74,6 +49,9 @@ export const Example: Story = {
               onClose: () => closeCustomModal(popUp.id),
               onConfirm: () => {
                 console.log('Confirmed');
+                /**************************************************************************************************************************************************
+                 * To close multiple modals using the close function returned from useModal, you must use the same key that was assigned when opening each modal. *
+                 **************************************************************************************************************************************************/
                 closeCustomModal(popUp.id);
               },
               style: {
@@ -82,19 +60,19 @@ export const Example: Story = {
             },
             {
               /*****************************************************************************************************************************************
-               * To render multiple modals using the open function returned from useModal, you must manually assign a unique key value for each modal. *
-               *************************************************************************************************************************************** */
+               * To open multiple modals using the open function returned from useModal, you must manually assign a unique key value for each modal. *
+               *****************************************************************************************************************************************/
               key: popUp.id,
             }
           );
         });
-        setReRender(false);
+        setIsOpen(false);
       }
-    }, [reRender, closeCustomModal, openCustomModal, popUpList]);
+    }, [isOpen, closeCustomModal, openCustomModal, popUpList]);
 
     return (
-      <button onClick={onReRender} className="open-button">
-        Re-render
+      <button onClick={onOpenMultipleModals} className="open-button">
+        Open Multiple Modals
       </button>
     );
   },

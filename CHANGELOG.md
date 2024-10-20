@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.1.1...v1.2.0) (2024-10-20)
+
+### Features
+
+* add key to the return value of useModal ([346c40c](https://github.com/iskkiri/react-use-hook-modal/commit/346c40cae01627a7f6a7296dc27529d4cb21d9fd))
+
 ## [1.1.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.1.0...v1.1.1) (2024-10-15)
 
 ### Documentation

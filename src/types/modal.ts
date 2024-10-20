@@ -49,4 +49,5 @@ export type CloseModal = (modalKey?: ModalKey) => void;
 export interface UseModalReturn<TProps> {
   open: OpenModal<TProps>;
   close: CloseModal;
+  key: ModalKey;
 }

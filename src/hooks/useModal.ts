@@ -31,5 +31,5 @@ export default function useModal<TProps extends { isOpen: boolean }>(
     [closeModal, key]
   );
 
-  return { open, close };
+  return { open, close, key };
 }

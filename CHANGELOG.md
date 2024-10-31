@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.3.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.2.0...v1.3.0) (2024-10-31)
+
+### Features
+
+* add clearModals hook ([027ae77](https://github.com/iskkiri/react-use-hook-modal/commit/027ae77ace9f1e21ae57b92f2ea21fb45878b7ed))
+* update README ([39d4fc7](https://github.com/iskkiri/react-use-hook-modal/commit/39d4fc7f8c47df9863ab4d578553f7875c308a85))
+
 ## [1.2.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.1.1...v1.2.0) (2024-10-20)
 
 ### Features

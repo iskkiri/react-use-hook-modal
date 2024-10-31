@@ -22,6 +22,7 @@ export interface OpenParams<TProps> {
 export interface ModalDispatchContextType {
   openModal: <TProps>(params: OpenParams<TProps>) => void;
   closeModal: (key: ModalKey) => void;
+  clearModals: () => void;
 }
 
 type IsPropsRequired<TProps> =

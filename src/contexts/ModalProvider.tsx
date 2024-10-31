@@ -113,7 +113,20 @@ export default function ModalProvider({
     [clearTime]
   );
 
-  const dispatch = useMemo(() => ({ openModal, closeModal }), [openModal, closeModal]);
+  const clearModals = useCallback(() => {
+    setModals((modals) => {
+      return modals.map((modal) => ({ ...modal, props: { ...modal.props, isOpen: false } }));
+    });
+
+    setTimeout(() => {
+      setModals((modals) => modals.filter((modal) => modal.props.isOpen === true));
+    }, clearTime);
+  }, [clearTime]);
+
+  const dispatch = useMemo(
+    () => ({ openModal, closeModal, clearModals }),
+    [openModal, closeModal, clearModals]
+  );
 
   return (
     <ModalStateContext.Provider value={{ modals }}>

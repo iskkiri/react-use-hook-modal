@@ -8,3 +8,20 @@
 
   font-size: 20px;
 }
+
+.clear-button {
+  z-index: 1000;
+  position: fixed;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 16px 24px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+
+  font-size: 20px;
+}

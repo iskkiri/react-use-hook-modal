@@ -43,4 +43,12 @@ describe('ModalDispatchContext', () => {
       'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
     );
   });
+
+  it('should throw an error when clearModals is called without ModalProvider', () => {
+    const { result } = renderHook(() => useContext(ModalDispatchContext));
+
+    expect(() => result.current.clearModals()).toThrowError(
+      'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
+    );
+  });
 });

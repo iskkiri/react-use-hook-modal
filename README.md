@@ -140,6 +140,20 @@ The `useModalsState` hook returns the current state of modals.
 | ------------ | -------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `modals`     | `Array<ModalObject>` | Each modal object contains information about the modal, such as the component, its props, and a unique key. |
 
+### useClearModals
+
+The `useClearModals` is a custom hook that provides a function to close all open modals in the application.
+
+#### Returns:
+
+The `useClearModals` hook returns an object containing the `clearModals` function.
+
+| Return Value  | Type         | Description                                                                                                                                                                                                |
+| ------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clearModals` | `() => void` | Closes all currently open modals by setting their `isOpen` property to `false`. Any modal that remains unopened before `clearTime` elapses will be removed from the state after the specified `clearTime`. |
+
+**Note**: If a modal is reopened before `clearTime` elapses, it will remain in the state, and only modals that are fully closed during the `clearTime` period will be removed.
+
 ## Contributing
 
 Contributions are welcome! Please check the [CONTRIBUTING.md](https://github.com/iskkiri/react-use-hook-modal/blob/main/CONTRIBUTING.md) for details on how to get involved and contribute to this project.

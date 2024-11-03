@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.3.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.0...v1.3.1) (2024-11-03)
+
+### Refactoring
+
+* refactoring the type of OpenParams ([f19df57](https://github.com/iskkiri/react-use-hook-modal/commit/f19df57e63ac3e47426e7a1c4d60e7021e0b67ef))
+
 ## [1.3.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.2.0...v1.3.0) (2024-10-31)
 
 ### Features

@@ -21,9 +21,9 @@ interface ModalProviderProps {
   container?: React.ComponentType<any>;
 
   /**
-   * The time in milliseconds before a modal is fully removed from the DOM after closing.
-   * This ensures that any exit animations (such as those from MUI, Bootstrap, or Chakra UI)
-   * are fully displayed before the modal is removed.
+   * The time in milliseconds before a modal is fully removed from the internal state
+   * after closing. This allows any exit animations from CSS frameworks (like MUI, Bootstrap, or Chakra UI)
+   * to complete before the modal is removed.
    * Defaults to 3000 milliseconds (3 seconds).
    */
   clearTime?: number;

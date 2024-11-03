@@ -12,11 +12,8 @@ export interface ModalStateContextType {
   modals: ModalState[];
 }
 
-export interface OpenParams<TProps> {
-  Component: React.ComponentType<TProps>;
+export interface OpenParams<TProps> extends Omit<ModalState<TProps>, 'props'> {
   props?: Omit<TProps, 'isOpen'>;
-  key: ModalKey;
-  portalTarget?: HTMLElement | null;
 }
 
 export interface ModalDispatchContextType {

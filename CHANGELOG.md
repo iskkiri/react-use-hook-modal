@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.4.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.1...v1.4.0) (2024-11-04)
+
+### Features
+
+* pnpm workspace settings ([e9be04f](https://github.com/iskkiri/react-use-hook-modal/commit/e9be04f7f10a9c4423914304aded7d34a2f2f475))
+
 ## [1.3.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.0...v1.3.1) (2024-11-03)
 
 ### Refactoring

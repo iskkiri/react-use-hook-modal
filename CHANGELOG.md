@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.4.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.0...v1.4.1) (2024-11-05)
+
+### Documentation
+
+* rename test.yml to test.yaml ([e00d900](https://github.com/iskkiri/react-use-hook-modal/commit/e00d90068331ed858bfea025bd03ff39e4fbc778))
+
 ## [1.4.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.1...v1.4.0) (2024-11-04)
 
 ### Features

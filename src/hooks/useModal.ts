@@ -22,11 +22,11 @@ export default function useModal<TProps extends { isOpen: boolean }>(
   );
 
   const close: CloseModal = useCallback(
-    (modalKey) => {
+    (options) => {
       const validKey =
-        typeof modalKey === 'string' || typeof modalKey === 'number' ? modalKey : key;
+        typeof options?.key === 'string' || typeof options?.key === 'number' ? options.key : key;
 
-      closeModal(validKey);
+      closeModal({ key: validKey, clearTime: options?.clearTime });
     },
     [closeModal, key]
   );

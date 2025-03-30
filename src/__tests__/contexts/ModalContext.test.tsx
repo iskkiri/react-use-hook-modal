@@ -39,7 +39,7 @@ describe('ModalDispatchContext', () => {
   it('should throw an error when closeModal is called without ModalProvider', () => {
     const { result } = renderHook(() => useContext(ModalDispatchContext));
 
-    expect(() => result.current.closeModal(testModalKey)).toThrowError(
+    expect(() => result.current.closeModal({ key: testModalKey })).toThrowError(
       'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
     );
   });

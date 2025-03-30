@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ModalDispatchContext, ModalStateContext } from './ModalContext';
-import type { ModalKey, ModalState, OpenParams } from '../types/modal';
+import type { CloseParams, ModalState, OpenParams } from '../types/modal';
 import Modals from '../components/Modals';
 
 interface ModalProviderProps {
@@ -94,12 +94,14 @@ export default function ModalProvider({
   );
 
   const closeModal = useCallback(
-    (key: ModalKey) => {
+    ({ key, clearTime: eachClearTime }: CloseParams) => {
       setModals((modals) => {
         return modals.map((modal) =>
           modal.key === key ? { ...modal, props: { ...modal.props, isOpen: false } } : modal
         );
       });
+
+      const timeout = typeof eachClearTime === 'number' ? eachClearTime : clearTime;
 
       setTimeout(() => {
         setModals((modals) => {
@@ -108,7 +110,7 @@ export default function ModalProvider({
 
           return modals.filter((modal) => modal.key !== key);
         });
-      }, clearTime);
+      }, timeout);
     },
     [clearTime]
   );

@@ -12,8 +12,9 @@ const TestModalComponent = ({ isOpen }: { isOpen: boolean }) => {
 describe('useModal', () => {
   const mockOpenModal = vi.fn();
   const mockCloseModal = vi.fn();
+  const mockClearModals = vi.fn();
 
-  const wrapper = ModalDispatchProviderWrapper(mockOpenModal, mockCloseModal);
+  const wrapper = ModalDispatchProviderWrapper(mockOpenModal, mockCloseModal, mockClearModals);
 
   it('should open the modal when open is called', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
@@ -35,7 +36,7 @@ describe('useModal', () => {
 
     act(() => result.current.close());
 
-    expect(mockCloseModal).toHaveBeenCalledWith(expect.any(String));
+    expect(mockCloseModal).toHaveBeenCalledWith({ key: expect.any(String) });
   });
 
   it('should use the provided key if options.key is specified', () => {
@@ -56,9 +57,9 @@ describe('useModal', () => {
 
     act(() => result.current.open({ isOpen: true }, { key: 'custom-key' }));
 
-    act(() => result.current.close('custom-key'));
+    act(() => result.current.close({ key: 'custom-key' }));
 
-    expect(mockCloseModal).toHaveBeenCalledWith('custom-key');
+    expect(mockCloseModal).toHaveBeenCalledWith({ key: 'custom-key' });
   });
 
   it('should open the modal with the provided portalTarget', () => {

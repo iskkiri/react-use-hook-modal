@@ -47,13 +47,13 @@ export const ClearAllModalsExample: Story = {
             {
               title: popUp.title,
               content: popUp.content,
-              onClose: () => closeCustomModal(popUp.id),
+              onClose: () => closeCustomModal({ key: popUp.id }),
               onConfirm: () => {
                 console.log('Confirmed');
                 /**************************************************************************************************************************************************
                  * To close multiple modals using the close function returned from useModal, you must use the same key that was assigned when opening each modal. *
                  **************************************************************************************************************************************************/
-                closeCustomModal(popUp.id);
+                closeCustomModal({ key: popUp.id });
               },
               style: {
                 transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,

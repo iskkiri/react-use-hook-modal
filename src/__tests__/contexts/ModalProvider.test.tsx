@@ -119,11 +119,19 @@ describe('ModalProvider', () => {
       const { open, close } = useModal(TestModal);
 
       const onOpenFirstModal = useCallback(
-        () => open({ onClose: () => close('modal-1'), title: 'First Modal' }, { key: 'modal-1' }),
+        () =>
+          open(
+            { onClose: () => close({ key: 'modal-1' }), title: 'First Modal' },
+            { key: 'modal-1' }
+          ),
         [close, open]
       );
       const onOpenSecondModal = useCallback(
-        () => open({ onClose: () => close('modal-2'), title: 'Second Modal' }, { key: 'modal-2' }),
+        () =>
+          open(
+            { onClose: () => close({ key: 'modal-2' }), title: 'Second Modal' },
+            { key: 'modal-2' }
+          ),
         [close, open]
       );
 

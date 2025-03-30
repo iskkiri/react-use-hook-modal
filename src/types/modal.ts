@@ -16,9 +16,13 @@ export interface OpenParams<TProps> extends Omit<ModalState<TProps>, 'props'> {
   props?: Omit<TProps, 'isOpen'>;
 }
 
+export interface CloseParams extends Omit<CloseModalOptions, 'modalKey'> {
+  key: ModalKey;
+}
+
 export interface ModalDispatchContextType {
   openModal: <TProps>(params: OpenParams<TProps>) => void;
-  closeModal: (key: ModalKey) => void;
+  closeModal: (params: CloseParams) => void;
   clearModals: () => void;
 }
 
@@ -42,7 +46,12 @@ export type OpenModal<TProps> =
     ? (props: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void
     : (props?: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void;
 
-export type CloseModal = (modalKey?: ModalKey) => void;
+export interface CloseModalOptions {
+  key?: ModalKey;
+  clearTime?: number;
+}
+
+export type CloseModal = (options?: CloseModalOptions) => void;
 
 export interface UseModalReturn<TProps> {
   open: OpenModal<TProps>;

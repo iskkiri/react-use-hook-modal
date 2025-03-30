@@ -1,6 +1,6 @@
 {
   "name": "react-use-hook-modal",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A React Hook library for declaratively managing modals, eliminating the need for state declarations. Props can be passed directly through function calls, simplifying modal control in your application.",
   "author": "iskkiri",
   "main": "dist/index.cjs.js",

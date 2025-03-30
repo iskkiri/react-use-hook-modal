@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.5.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.1...v1.5.0) (2025-03-30)
+
+### Features
+
+* add per-modal clearTime override option ([5fb48f5](https://github.com/iskkiri/react-use-hook-modal/commit/5fb48f5b5a943bc210df0a78af271de37071b66a))
+
 ## [1.4.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.0...v1.4.1) (2024-11-05)
 
 ### Documentation

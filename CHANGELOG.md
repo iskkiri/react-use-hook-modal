@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.6.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.5.0...v1.6.0) (2025-04-06)
+
+### Features
+
+* add useModalStatus hook for monitoring modal state ([64130f6](https://github.com/iskkiri/react-use-hook-modal/commit/64130f68ce6806168ba0e3b2de46ee5d3bca697e))
+
 ## [1.5.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.1...v1.5.0) (2025-03-30)
 
 ### Features

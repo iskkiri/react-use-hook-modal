@@ -137,6 +137,36 @@ The `CloseModalOptions` is an optional parameter for the `close` function return
 | `key`       | `string \| number` | (Optional) A unique key for identifying the modal instance to close. If not provided, closes the modal associated with the current hook.                |
 | `clearTime` | `number`           | (Optional) Override the global clearTime setting for this specific modal closure. Determines how long to wait before removing the modal from the state. |
 
+### useModalStatus
+
+`useModalStatus` is a hook designed for monitoring the open/close status of a specific modal. This hook only tracks the modal state without providing any control methods.
+
+#### Parameters:
+
+| Parameter | Type               | Description                                   |
+| --------- | ------------------ | --------------------------------------------- |
+| `key`     | `string \| number` | The unique identifier of the modal to monitor |
+
+#### Returns:
+
+| Return Value | Type      | Description                                          |
+| ------------ | --------- | ---------------------------------------------------- |
+| `isOpen`     | `boolean` | The current open/close status of the specified modal |
+
+#### Example:
+
+```tsx
+import { useModalStatus } from 'react-use-hook-modal';
+
+const MyComponent = () => {
+  const { isOpen } = useModalStatus({ key: 'my-modal' });
+
+  return <div>Modal is currently {isOpen ? 'open' : 'closed'}</div>;
+};
+```
+
+**Note**: This hook must be used within a `ModalProvider`. It will throw an error if used outside of a `ModalProvider` context.
+
 ### useModalsState
 
 `useModalsState` is a custom hook designed to access the current state of all modals in your application.

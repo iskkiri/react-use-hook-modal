@@ -368,4 +368,44 @@ describe('ModalProvider', () => {
     expect(modalState.props.title).toBe('Closed Modal');
     expect(modalState.props.isOpen).toBe(false);
   });
+
+  it('should respect eachClearTime over clearTime when provided', async () => {
+    const clearTime = 1000;
+    const eachClearTime = 500;
+
+    const TestComponent = () => {
+      const { modals } = useModalsState();
+      const { open, close } = useModal(TestModal);
+
+      const onOpen = useCallback(
+        () => open({ onClose: () => close({ clearTime: eachClearTime }) }),
+        [close, open]
+      );
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <p>Modals count: {modals.length}</p>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider clearTime={clearTime}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Close'));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    expect(screen.getByText('Modals count: 1')).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByText('Modals count: 0')).toBeInTheDocument(), {
+      timeout: eachClearTime + 100,
+    });
+  });
 });

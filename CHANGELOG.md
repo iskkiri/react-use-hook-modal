@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.6.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.0...v1.6.1) (2025-04-09)
+
+### Refactoring
+
+* enhance type inference for union types in useModal hook ([c45329b](https://github.com/iskkiri/react-use-hook-modal/commit/c45329b7a356c98b6a922dcf13dfaf245324cccc))
+
 ## [1.6.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.5.0...v1.6.0) (2025-04-06)
 
 ### Features

@@ -1,6 +1,12 @@
 import { useCallback, useContext, useMemo } from 'react';
 import { ModalDispatchContext } from '../contexts/ModalContext';
-import type { CloseModal, OpenModal, OpenModalOptions, UseModalReturn } from '../types/modal';
+import type {
+  CloseModal,
+  DistributiveOmit,
+  OpenModal,
+  OpenModalOptions,
+  UseModalReturn,
+} from '../types/modal';
 import { nanoid } from '../utils/nanoid';
 
 export default function useModal<TProps extends { isOpen: boolean }>(
@@ -10,7 +16,7 @@ export default function useModal<TProps extends { isOpen: boolean }>(
   const key = useMemo(() => nanoid(), []);
 
   const open: OpenModal<TProps> = useCallback(
-    (props?: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => {
+    (props?: DistributiveOmit<TProps, 'isOpen'>, options?: OpenModalOptions) => {
       openModal({
         Component,
         props,

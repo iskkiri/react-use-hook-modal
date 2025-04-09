@@ -43,8 +43,8 @@ export interface OpenModalOptions {
 
 export type OpenModal<TProps> =
   IsPropsRequired<TProps> extends true
-    ? (props: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void
-    : (props?: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void;
+    ? (props: DistributiveOmit<TProps, 'isOpen'>, options?: OpenModalOptions) => void
+    : (props?: DistributiveOmit<TProps, 'isOpen'>, options?: OpenModalOptions) => void;
 
 export interface CloseModalOptions {
   key?: ModalKey;
@@ -58,3 +58,16 @@ export interface UseModalReturn<TProps> {
   close: CloseModal;
   key: ModalKey;
 }
+
+/**
+ * A utility type that correctly distributes Omit over union types.
+ *
+ * In TypeScript, when a conditional type like `T extends U ? X : Y` is used with
+ * a union type `T = A | B | C`, the conditional type is automatically distributed over
+ * each member of the union, resulting in:
+ * `(A extends U ? X : Y) | (B extends U ? X : Y) | (C extends U ? X : Y)`
+ *
+ * This distributive behavior is used here to apply Omit to each member of a union type,
+ * preserving the discriminated union relationships.
+ */
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;

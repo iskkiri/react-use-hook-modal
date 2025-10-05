@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [1.7.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.1...v1.7.0) (2025-10-05)
+
+### Features
+
+* add React Native support by replacing DOM-specific dependencies ([00dfefd](https://github.com/iskkiri/react-use-hook-modal/commit/00dfefd07454bef45dade959db91a65db100c9cd))
+
+### Refactoring
+
+* restructure examples into separate web and react-native workspaces ([479597a](https://github.com/iskkiri/react-use-hook-modal/commit/479597a06b95640218d085d44dbe26245574a2e6))
+
 ## [1.6.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.0...v1.6.1) (2025-04-09)
 
 ### Refactoring

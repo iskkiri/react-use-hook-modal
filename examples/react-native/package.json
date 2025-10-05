@@ -1,0 +1,23 @@
+{
+  "name": "@examples/react-native",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~54.0.12",
+    "expo-status-bar": "~3.0.8",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
+    "react-use-hook-modal": "file:../../react-use-hook-modal-1.6.1.tgz"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.17",
+    "typescript": "~5.9.3"
+  },
+  "private": true
+}

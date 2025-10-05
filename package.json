@@ -30,11 +30,13 @@
     "test": "vitest",
     "coverage": "vitest --coverage",
     "format": "prettier --write .",
+    "check-types": "tsc --noEmit",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "semantic-release": "semantic-release"
   },
   "keywords": [
     "react",
+    "react-native",
     "modal",
     "hooks",
     "useModal"
@@ -42,34 +44,40 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.0",
+    "@rollup/plugin-typescript": "^12.1.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@testing-library/jest-dom": "^6.5.0",
-    "@testing-library/react": "^16.0.1",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.8.1",
-    "@typescript-eslint/parser": "^8.8.1",
-    "@vitest/coverage-v8": "^2.1.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^18.3.25",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "@vitest/coverage-v8": "^2.1.9",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "eslint": "^8.57.1",
-    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^25.0.1",
-    "prettier": "^3.3.3",
+    "prettier": "^3.6.2",
+    "react": "19.2.0",
+    "react-dom": "^19.2.0",
     "rimraf": "^6.0.1",
-    "rollup": "^4.24.0",
+    "rollup": "^4.52.4",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "semantic-release": "^24.1.2",
-    "tslib": "^2.7.0",
-    "typescript": "^5.6.2",
-    "vitest": "^2.1.2"
+    "semantic-release": "^24.2.9",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    }
   },
   "repository": {
     "type": "git",

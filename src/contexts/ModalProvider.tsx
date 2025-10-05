@@ -76,7 +76,10 @@ export default function ModalProvider({
 
   const openModal = useCallback(
     <TProps,>({ Component, props, key, portalTarget }: OpenParams<TProps>) => {
-      const propsWithIsOpen = { ...props, isOpen: true };
+      const propsWithIsOpen = {
+        ...props,
+        isOpen: true,
+      };
 
       setModals((modals) => {
         const targetIndex = modals.findIndex((modal) => modal.key === key);
@@ -87,7 +90,15 @@ export default function ModalProvider({
           return updatedModals;
         }
 
-        return [...modals, { Component, props: propsWithIsOpen, key, portalTarget }];
+        return [
+          ...modals,
+          {
+            Component,
+            props: propsWithIsOpen,
+            key,
+            portalTarget,
+          },
+        ];
       });
     },
     []
@@ -97,7 +108,15 @@ export default function ModalProvider({
     ({ key, clearTime: eachClearTime }: CloseParams) => {
       setModals((modals) => {
         return modals.map((modal) =>
-          modal.key === key ? { ...modal, props: { ...modal.props, isOpen: false } } : modal
+          modal.key === key
+            ? {
+                ...modal,
+                props: {
+                  ...modal.props,
+                  isOpen: false,
+                },
+              }
+            : modal
         );
       });
 
@@ -117,7 +136,13 @@ export default function ModalProvider({
 
   const clearModals = useCallback(() => {
     setModals((modals) => {
-      return modals.map((modal) => ({ ...modal, props: { ...modal.props, isOpen: false } }));
+      return modals.map((modal) => ({
+        ...modal,
+        props: {
+          ...modal.props,
+          isOpen: false,
+        },
+      }));
     });
 
     setTimeout(() => {

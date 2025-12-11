@@ -1,9 +1,15 @@
 export type ModalKey = string | number;
 
+export interface InjectedProps<TResult = unknown> {
+  isOpen: boolean;
+  close: CloseModal<TResult>;
+}
+export type InjectedPropsKeys = keyof InjectedProps;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface ModalState<TProps = any> {
+export interface ModalState<TProps = any, TResult = unknown> {
   Component: React.ComponentType<TProps>;
-  props: TProps & { isOpen: boolean };
+  props: TProps & InjectedProps<TResult>;
   key: ModalKey;
   portalTarget?: HTMLElement | null;
 }
@@ -12,27 +18,18 @@ export interface ModalStateContextType {
   modals: ModalState[];
 }
 
-export interface OpenParams<TProps> extends Omit<ModalState<TProps>, 'props'> {
-  props?: Omit<TProps, 'isOpen'>;
-}
-
-export interface CloseParams extends Omit<CloseModalOptions, 'modalKey'> {
-  key: ModalKey;
-}
-
 export interface ModalDispatchContextType {
-  openModal: <TProps>(params: OpenParams<TProps>) => void;
-  closeModal: (params: CloseParams) => void;
+  openModal: <TProps, TResult = unknown>(params: ModalState<TProps, TResult>) => Promise<TResult>;
+  closeModal: <TResult = unknown>(params: CloseParams<TResult>) => void;
   clearModals: () => void;
 }
 
+type UserProvidedKeys<TProps> = Exclude<keyof TProps, InjectedPropsKeys>;
+
 type IsPropsRequired<TProps> =
-  Exclude<keyof TProps, 'isOpen'> extends never
+  UserProvidedKeys<TProps> extends never
     ? false
-    : Partial<Pick<TProps, Exclude<keyof TProps, 'isOpen'>>> extends Pick<
-          TProps,
-          Exclude<keyof TProps, 'isOpen'>
-        >
+    : Partial<Pick<TProps, UserProvidedKeys<TProps>>> extends Pick<TProps, UserProvidedKeys<TProps>>
       ? false
       : true;
 
@@ -41,21 +38,33 @@ export interface OpenModalOptions {
   portalTarget?: HTMLElement | null;
 }
 
-export type OpenModal<TProps> =
+export type OpenModal<TProps, TResult = unknown> =
   IsPropsRequired<TProps> extends true
-    ? (props: DistributiveOmit<TProps, 'isOpen'>, options?: OpenModalOptions) => void
-    : (props?: DistributiveOmit<TProps, 'isOpen'>, options?: OpenModalOptions) => void;
+    ? (
+        props: DistributiveOmit<TProps, InjectedPropsKeys>,
+        options?: OpenModalOptions
+      ) => Promise<TResult>
+    : (
+        props?: DistributiveOmit<TProps, InjectedPropsKeys>,
+        options?: OpenModalOptions
+      ) => Promise<TResult>;
 
-export interface CloseModalOptions {
+export type CloseModalOptions<TResult = unknown> = {
   key?: ModalKey;
   clearTime?: number;
-}
+} & (unknown extends TResult ? { result?: TResult } : { result: TResult });
 
-export type CloseModal = (options?: CloseModalOptions) => void;
+export type CloseParams<TResult = unknown> = CloseModalOptions<TResult> & {
+  key: ModalKey;
+};
 
-export interface UseModalReturn<TProps> {
-  open: OpenModal<TProps>;
-  close: CloseModal;
+export type CloseModal<TResult = unknown> = unknown extends TResult
+  ? (options?: CloseModalOptions<TResult>) => void
+  : (options: CloseModalOptions<TResult>) => void;
+
+export interface UseModalReturn<TProps, TResult = unknown> {
+  open: OpenModal<TProps, TResult>;
+  close: CloseModal<TResult>;
   key: ModalKey;
 }
 
@@ -71,3 +80,10 @@ export interface UseModalReturn<TProps> {
  * preserving the discriminated union relationships.
  */
 export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
+/**
+ * Infers the TResult type from a modal component's close prop.
+ * If the component has `close: CloseModal<SomeType>`, extracts SomeType.
+ * Falls back to `unknown` if close prop doesn't exist or isn't typed.
+ */
+export type InferResult<TProps> = TProps extends { close: CloseModal<infer R> } ? R : unknown;

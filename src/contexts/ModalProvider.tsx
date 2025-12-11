@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ModalDispatchContext, ModalStateContext } from './ModalContext';
-import type { CloseParams, ModalState, OpenParams } from '../types/modal';
+import type { ModalDispatchContextType, ModalKey, ModalState } from '../types/modal';
 import Modals from '../components/Modals';
 
 interface ModalProviderProps {
@@ -55,57 +55,58 @@ export default function ModalProvider({
 }: ModalProviderProps) {
   const [modals, setModals] = useState<ModalState[]>([]);
   const prevModalsRef = useRef<ModalState[]>([]);
+  const resolverMapRef = useRef<Map<ModalKey, (result: unknown) => void>>(new Map());
 
+  // Detect modal open/close state changes and trigger corresponding callbacks.
+  // Compares current modals with previous snapshot to determine which modals
+  // have been opened or closed since the last render.
   useEffect(() => {
     const prevModals = prevModalsRef.current;
 
     modals.forEach((modal) => {
       const prevModal = prevModals.find((m) => m.key === modal.key);
 
+      // Modal opened: didn't exist before or was closed, now is open
       if ((!prevModal || !prevModal.props.isOpen) && modal.props.isOpen && onAfterOpen) {
         onAfterOpen(modal);
       }
 
-      if (prevModal && !modal.props.isOpen && prevModal.props.isOpen && onAfterClose) {
+      // Modal closed: existed and was open before, now is closed
+      if (prevModal && prevModal.props.isOpen && !modal.props.isOpen && onAfterClose) {
         onAfterClose(modal);
       }
     });
 
+    // Store current state as reference for next comparison
     prevModalsRef.current = modals;
   }, [modals, onAfterOpen, onAfterClose]);
 
-  const openModal = useCallback(
-    <TProps,>({ Component, props, key, portalTarget }: OpenParams<TProps>) => {
-      const propsWithIsOpen = {
-        ...props,
-        isOpen: true,
-      };
+  const openModal: ModalDispatchContextType['openModal'] = useCallback((modalState) => {
+    return new Promise((resolve) => {
+      resolverMapRef.current.set(modalState.key, resolve as (result: unknown) => void);
 
       setModals((modals) => {
-        const targetIndex = modals.findIndex((modal) => modal.key === key);
+        const targetIndex = modals.findIndex((modal) => modal.key === modalState.key);
 
         if (targetIndex !== -1) {
           const updatedModals = [...modals];
-          updatedModals[targetIndex] = { ...updatedModals[targetIndex], props: propsWithIsOpen };
+          updatedModals[targetIndex] = { ...updatedModals[targetIndex], props: modalState.props };
           return updatedModals;
         }
 
-        return [
-          ...modals,
-          {
-            Component,
-            props: propsWithIsOpen,
-            key,
-            portalTarget,
-          },
-        ];
+        return [...modals, modalState];
       });
-    },
-    []
-  );
+    });
+  }, []);
 
-  const closeModal = useCallback(
-    ({ key, clearTime: eachClearTime }: CloseParams) => {
+  const closeModal: ModalDispatchContextType['closeModal'] = useCallback(
+    ({ key, clearTime: eachClearTime, result }) => {
+      const resolver = resolverMapRef.current.get(key);
+      if (resolver) {
+        resolver(result);
+        resolverMapRef.current.delete(key);
+      }
+
       setModals((modals) => {
         return modals.map((modal) =>
           modal.key === key
@@ -135,6 +136,12 @@ export default function ModalProvider({
   );
 
   const clearModals = useCallback(() => {
+    // Resolve all pending promises with undefined
+    resolverMapRef.current.forEach((resolver) => {
+      resolver(undefined);
+    });
+    resolverMapRef.current.clear();
+
     setModals((modals) => {
       return modals.map((modal) => ({
         ...modal,

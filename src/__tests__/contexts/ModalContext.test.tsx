@@ -26,8 +26,8 @@ describe('ModalDispatchContext', () => {
     const { result } = renderHook(() => useContext(ModalDispatchContext));
 
     const params = {
-      Component: (_props: { title: string; isOpen: boolean }) => null,
-      props: { title: 'Test Modal' },
+      Component: (_props: { title: string; isOpen: boolean; close: () => void }) => null,
+      props: { title: 'Test Modal', isOpen: true, close: () => {} },
       key: testModalKey,
     };
 

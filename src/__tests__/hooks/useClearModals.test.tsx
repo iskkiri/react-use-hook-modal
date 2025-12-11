@@ -5,20 +5,21 @@ import ModalProvider from '../../contexts/ModalProvider';
 import useModal from '../../hooks/useModal';
 import useClearModals from '../../hooks/useClearModals';
 import useModalsState from '../../hooks/useModalsState';
+import type { CloseModal } from '../../types/modal';
 
 interface TestModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  close: CloseModal;
   title?: string;
 }
 
-const TestModal = ({ isOpen, onClose, title }: TestModalProps) => {
+const TestModal = ({ isOpen, close, title }: TestModalProps) => {
   if (!isOpen) return null;
 
   return (
     <div role="dialog">
       <p>{title ?? 'Test Modal'}</p>
-      <button onClick={onClose}>Close</button>
+      <button onClick={() => close()}>Close</button>
     </div>
   );
 };
@@ -29,16 +30,16 @@ describe('useClearModals', () => {
 
     const TestComponent = () => {
       const { modals } = useModalsState();
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
       const { clearModals } = useClearModals();
 
       const onOpenFirstModal = useCallback(
-        () => open({ onClose: close, title: 'First Modal' }, { key: 'modal-1' }),
-        [open, close]
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
+        [open]
       );
       const onOpenSecondModal = useCallback(
-        () => open({ onClose: close, title: 'Second Modal' }, { key: 'modal-2' }),
-        [open, close]
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
+        [open]
       );
 
       return (
@@ -85,11 +86,11 @@ describe('useClearModals', () => {
       const { clearModals } = useClearModals();
 
       const onOpenFirstModal = useCallback(
-        () => open({ onClose: () => {}, title: 'First Modal' }, { key: 'modal-1' }),
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
         [open]
       );
       const onOpenSecondModal = useCallback(
-        () => open({ onClose: () => {}, title: 'Second Modal' }, { key: 'modal-2' }),
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
         [open]
       );
 

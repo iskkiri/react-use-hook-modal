@@ -1,22 +1,28 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import type { InjectedProps } from 'react-use-hook-modal';
 
 import '../styles/custom-modal.css';
+import { useCallback } from 'react';
 
-interface AnimatedModalWithFramerMotionProps {
-  isOpen: boolean;
+interface AnimatedModalWithFramerMotionProps extends InjectedProps<{ confirmed: boolean }> {
   title: string;
   content: string;
-  onClose: () => void;
-  onConfirm: () => void;
 }
 
 export default function AnimatedModalWithFramerMotion({
   isOpen,
   title,
   content,
-  onClose,
-  onConfirm,
+  close,
 }: AnimatedModalWithFramerMotionProps) {
+  const onClose = useCallback(() => {
+    close({ result: { confirmed: false } });
+  }, [close]);
+
+  const onConfirm = useCallback(() => {
+    close({ result: { confirmed: true } });
+  }, [close]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -33,7 +39,7 @@ export default function AnimatedModalWithFramerMotion({
 
             <div className="custom-button-container">
               <button className="close-button" onClick={onClose}>
-                Close
+                Cancel
               </button>
 
               <button className="confirm-button" onClick={onConfirm}>

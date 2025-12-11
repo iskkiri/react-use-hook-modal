@@ -1,19 +1,17 @@
-import { useCallback } from 'react';
+import { lazy, useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import useMaterialDialog from '@/hooks/useMaterialDialog';
 import { Button } from '@mui/material';
+
+const MaterialDialog = lazy(() => import('@/components/MaterialDialog'));
 
 const theme = createTheme();
 
 const meta = {
   title: 'Examples/MaterialDialog',
-  parameters: {
-    layout: 'centered',
-  },
   decorators: [
     (Story) => {
       return (
@@ -34,20 +32,32 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   render: function Render() {
-    const { openMaterialDialog, closeMaterialDialog } = useMaterialDialog();
+    const [result, setResult] = useState('No result yet');
+    const { open: openMaterialDialog } = useModal(MaterialDialog);
 
-    const onOpenChakraModal = useCallback(() => {
-      openMaterialDialog({
+    const onOpenMaterialDialog = useCallback(async () => {
+      setResult('Waiting for user...');
+
+      const { confirmed } = await openMaterialDialog({
         title: 'Material Dialog',
         content: 'This is a Material Dialog',
-        onClose: closeMaterialDialog,
-        onConfirm: () => {
-          console.log('Confirmed');
-          closeMaterialDialog();
-        },
       });
-    }, [closeMaterialDialog, openMaterialDialog]);
 
-    return <Button onClick={onOpenChakraModal}>Open Material Dialog</Button>;
+      if (confirmed) {
+        setResult('User confirmed! ✅');
+      } else {
+        setResult('User cancelled! ❌');
+      }
+    }, [openMaterialDialog]);
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Button onClick={onOpenMaterialDialog}>Open Material Dialog</Button>
+
+        <p style={{ marginTop: '20px', fontSize: '18px' }}>
+          Result: <strong>{result}</strong>
+        </p>
+      </div>
+    );
   },
 };

@@ -1,9 +1,10 @@
-import { useCallback, useRef } from 'react';
+import { lazy, useCallback, useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
-import useCustomModal from '@/hooks/useCustomModal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 
 import '../styles/stories.css';
+
+const CustomModal = lazy(() => import('@/components/CustomModal'));
 
 const meta = {
   title: 'Examples/PortalTarget',
@@ -27,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 export const Example: Story = {
   render: function Render() {
     const modalRootRef = useRef<HTMLDivElement | null>(null);
-    const { openCustomModal, closeCustomModal } = useCustomModal();
+    const { open: openCustomModal } = useModal(CustomModal);
 
     const onOpenCustomModal = useCallback(() => {
       openCustomModal(
@@ -35,21 +36,18 @@ export const Example: Story = {
           title: 'Custom Modal with modalRoot as the portal element',
           content:
             'Open the developer tools in your browser to check where the modal is being rendered',
-          onClose: closeCustomModal,
-          onConfirm: () => {
-            console.log('Confirmed');
-            closeCustomModal();
-          },
         },
         {
           portalTarget: modalRootRef.current,
         }
       );
-    }, [closeCustomModal, openCustomModal]);
+    }, [openCustomModal]);
 
     return (
-      <div>
-        <div ref={modalRootRef} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+        <div ref={modalRootRef} style={{ fontSize: '18px', fontWeight: 'bold' }}>
+          Modal Root
+        </div>
 
         <button onClick={onOpenCustomModal} className="open-button">
           Open Custom Modal with modalRoot as the portal element

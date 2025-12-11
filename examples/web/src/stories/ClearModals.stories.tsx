@@ -1,9 +1,10 @@
 import '../styles/stories.css';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider, useClearModals } from 'react-use-hook-modal';
-import useCustomModal from '@/hooks/useCustomModal';
+import { ModalProvider, useClearModals, useModal } from 'react-use-hook-modal';
+
+const CustomModal = lazy(() => import('@/components/CustomModal'));
 
 const meta = {
   title: 'Examples/ClearModals',
@@ -38,7 +39,7 @@ export const ClearAllModalsExample: Story = {
       }));
     }, []);
 
-    const { openCustomModal, closeCustomModal } = useCustomModal();
+    const { open: openCustomModal, close: closeCustomModal } = useModal(CustomModal);
 
     useEffect(() => {
       if (isOpen) {
@@ -47,14 +48,6 @@ export const ClearAllModalsExample: Story = {
             {
               title: popUp.title,
               content: popUp.content,
-              onClose: () => closeCustomModal({ key: popUp.id }),
-              onConfirm: () => {
-                console.log('Confirmed');
-                /**************************************************************************************************************************************************
-                 * To close multiple modals using the close function returned from useModal, you must use the same key that was assigned when opening each modal. *
-                 **************************************************************************************************************************************************/
-                closeCustomModal({ key: popUp.id });
-              },
               style: {
                 transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,
               },

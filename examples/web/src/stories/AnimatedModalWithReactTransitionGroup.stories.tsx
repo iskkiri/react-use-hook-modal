@@ -1,16 +1,17 @@
-import { useCallback } from 'react';
+import { lazy, useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 import { TransitionGroup } from 'react-transition-group';
-import useAnimatedModalWithReactTransitionGroup from '@/hooks/useAnimatedModalWithReactTransitionGroup';
 
 import '../styles/stories.css';
 
+const AnimatedModalWithReactTransitionGroup = lazy(
+  () => import('@/components/AnimatedModalWithReactTransitionGroup')
+);
+
 const meta = {
   title: 'Examples/Animation',
-  parameters: {
-    layout: 'centered',
-  },
+
   decorators: [
     (Story) => {
       return (
@@ -30,27 +31,36 @@ type Story = StoryObj<typeof meta>;
 
 export const ReactTransitionGroup: Story = {
   render: function Render() {
-    const {
-      openAnimatedModalWithReactTransitionGroup,
-      closeAnimatedModalWithReactTransitionGroup,
-    } = useAnimatedModalWithReactTransitionGroup();
+    const [result, setResult] = useState('No result yet');
+    const { open: openAnimatedModalWithReactTransitionGroup } = useModal(
+      AnimatedModalWithReactTransitionGroup
+    );
 
-    const onOpenAnimatedModal = useCallback(() => {
-      openAnimatedModalWithReactTransitionGroup({
+    const onOpenAnimatedModalWithReactTransitionGroup = useCallback(async () => {
+      setResult('Waiting for user...');
+
+      const { confirmed } = await openAnimatedModalWithReactTransitionGroup({
         title: 'Animated Modal (React Transition Group)',
         content: 'Note: TransitionGroup must be set as the container for ModalProvider.',
-        onClose: closeAnimatedModalWithReactTransitionGroup,
-        onConfirm: () => {
-          console.log('Confirmed');
-          closeAnimatedModalWithReactTransitionGroup();
-        },
       });
-    }, [closeAnimatedModalWithReactTransitionGroup, openAnimatedModalWithReactTransitionGroup]);
+
+      if (confirmed) {
+        setResult('User confirmed! ✅');
+      } else {
+        setResult('User cancelled! ❌');
+      }
+    }, [openAnimatedModalWithReactTransitionGroup]);
 
     return (
-      <button onClick={onOpenAnimatedModal} className="open-button">
-        Open Animated Modal (React Transition Group)
-      </button>
+      <div style={{ textAlign: 'center' }}>
+        <button onClick={onOpenAnimatedModalWithReactTransitionGroup} className="open-button">
+          Open Animated Modal (React Transition Group)
+        </button>
+
+        <p style={{ marginTop: '20px', fontSize: '18px' }}>
+          Result: <strong>{result}</strong>
+        </p>
+      </div>
     );
   },
 };

@@ -1,15 +1,16 @@
-import { useCallback } from 'react';
+import { lazy, useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 
 import '../styles/stories.css';
-import useAnimatedModalWithFramerMotion from '@/hooks/useAnimatedModalWithFramerMotion';
+
+const AnimatedModalWithFramerMotion = lazy(
+  () => import('@/components/AnimatedModalWithFramerMotion')
+);
 
 const meta = {
   title: 'Examples/Animation',
-  parameters: {
-    layout: 'centered',
-  },
+
   decorators: [
     (Story) => {
       return (
@@ -26,25 +27,34 @@ type Story = StoryObj<typeof meta>;
 
 export const FramerMotion: Story = {
   render: function Render() {
-    const { openAnimatedModalWithFramerMotion, closeAnimatedModalWithFramerMotion } =
-      useAnimatedModalWithFramerMotion();
+    const [result, setResult] = useState('No result yet');
+    const { open: openAnimatedModalWithFramerMotion } = useModal(AnimatedModalWithFramerMotion);
 
-    const onOpenAnimatedModalWithFramerMotion = useCallback(() => {
-      openAnimatedModalWithFramerMotion({
+    const onOpenAnimatedModalWithFramerMotion = useCallback(async () => {
+      setResult('Waiting for user...');
+
+      const { confirmed } = await openAnimatedModalWithFramerMotion({
         title: 'Animated Modal (Framer Motion)',
         content: 'This is an Animated Modal (Framer Motion)',
-        onClose: closeAnimatedModalWithFramerMotion,
-        onConfirm: () => {
-          console.log('Confirmed');
-          closeAnimatedModalWithFramerMotion();
-        },
       });
-    }, [closeAnimatedModalWithFramerMotion, openAnimatedModalWithFramerMotion]);
+
+      if (confirmed) {
+        setResult('User confirmed! ✅');
+      } else {
+        setResult('User cancelled! ❌');
+      }
+    }, [openAnimatedModalWithFramerMotion]);
 
     return (
-      <button onClick={onOpenAnimatedModalWithFramerMotion} className="open-button">
-        Open Animated Modal (Framer Motion)
-      </button>
+      <div style={{ textAlign: 'center' }}>
+        <button onClick={onOpenAnimatedModalWithFramerMotion} className="open-button">
+          Open Animated Modal (Framer Motion)
+        </button>
+
+        <p style={{ marginTop: '20px', fontSize: '18px' }}>
+          Result: <strong>{result}</strong>
+        </p>
+      </div>
     );
   },
 };

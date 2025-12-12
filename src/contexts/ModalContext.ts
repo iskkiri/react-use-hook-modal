@@ -14,6 +14,11 @@ export const ModalDispatchContext = createContext<ModalDispatchContextType>({
       'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
     );
   },
+  updateModal: () => {
+    throw new Error(
+      'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
+    );
+  },
   clearModals: () => {
     throw new Error(
       'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'

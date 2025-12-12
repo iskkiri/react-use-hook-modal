@@ -13,9 +13,10 @@ const TestModalComponent = ({ isOpen }: { isOpen: boolean; close: CloseModal }) 
 describe('useModal', () => {
   const mockOpenModal = vi.fn();
   const mockCloseModal = vi.fn();
+  const mockUpdateModal = vi.fn();
   const mockClearModals = vi.fn();
 
-  const wrapper = ModalDispatchProviderWrapper(mockOpenModal, mockCloseModal, mockClearModals);
+  const wrapper = ModalDispatchProviderWrapper(mockOpenModal, mockCloseModal, mockUpdateModal, mockClearModals);
 
   it('should open the modal when open is called', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
@@ -74,6 +75,17 @@ describe('useModal', () => {
       props: { isOpen: true, close: expect.any(Function) },
       key: expect.any(String),
       portalTarget,
+    });
+  });
+
+  it('should update modal props when update is called', () => {
+    const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
+
+    act(() => result.current.update({ title: 'Updated Title' }));
+
+    expect(mockUpdateModal).toHaveBeenCalledWith({
+      key: expect.any(String),
+      props: { title: 'Updated Title' },
     });
   });
 });

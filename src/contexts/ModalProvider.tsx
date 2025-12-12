@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ModalDispatchContext, ModalStateContext } from './ModalContext';
-import type { ModalDispatchContextType, ModalKey, ModalState } from '../types/modal';
+import type { ModalDispatchContextType, ModalKey, ModalState, UpdateModalParams } from '../types/modal';
 import Modals from '../components/Modals';
 
 interface ModalProviderProps {
@@ -135,6 +135,32 @@ export default function ModalProvider({
     [clearTime]
   );
 
+  const updateModal = useCallback(({ key, props }: UpdateModalParams) => {
+    setModals((modals) => {
+      const targetModal = modals.find((modal) => modal.key === key);
+
+      // Ignore if modal doesn't exist or is not open
+      if (!targetModal || !targetModal.props.isOpen) {
+        return modals;
+      }
+
+      return modals.map((modal) =>
+        modal.key === key
+          ? {
+              ...modal,
+              props: {
+                ...modal.props,
+                ...props,
+                // Prevent overwriting injected props
+                isOpen: modal.props.isOpen,
+                close: modal.props.close,
+              },
+            }
+          : modal
+      );
+    });
+  }, []);
+
   const clearModals = useCallback(() => {
     // Resolve all pending promises with undefined
     resolverMapRef.current.forEach((resolver) => {
@@ -158,8 +184,8 @@ export default function ModalProvider({
   }, [clearTime]);
 
   const dispatch = useMemo(
-    () => ({ openModal, closeModal, clearModals }),
-    [openModal, closeModal, clearModals]
+    () => ({ openModal, closeModal, updateModal, clearModals }),
+    [openModal, closeModal, updateModal, clearModals]
   );
 
   return (

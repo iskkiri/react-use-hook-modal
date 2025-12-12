@@ -18,9 +18,15 @@ export interface ModalStateContextType {
   modals: ModalState[];
 }
 
+export interface UpdateModalParams {
+  key: ModalKey;
+  props: Record<string, unknown>;
+}
+
 export interface ModalDispatchContextType {
   openModal: <TProps, TResult = unknown>(params: ModalState<TProps, TResult>) => Promise<TResult>;
   closeModal: <TResult = unknown>(params: CloseParams<TResult>) => void;
+  updateModal: (params: UpdateModalParams) => void;
   clearModals: () => void;
 }
 
@@ -62,9 +68,19 @@ export type CloseModal<TResult = unknown> = unknown extends TResult
   ? (options?: CloseModalOptions<TResult>) => void
   : (options: CloseModalOptions<TResult>) => void;
 
+export interface UpdateModalOptions {
+  key?: ModalKey;
+}
+
+export type UpdateModal<TProps> = (
+  props: Partial<DistributiveOmit<TProps, InjectedPropsKeys>>,
+  options?: UpdateModalOptions
+) => void;
+
 export interface UseModalReturn<TProps, TResult = unknown> {
   open: OpenModal<TProps, TResult>;
   close: CloseModal<TResult>;
+  update: UpdateModal<TProps>;
   key: ModalKey;
 }
 

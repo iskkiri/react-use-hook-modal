@@ -415,4 +415,97 @@ describe('ModalProvider', () => {
       timeout: eachClearTime + 100,
     });
   });
+
+  it('should update modal props when update is called', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Update Title'));
+    await waitFor(() => expect(screen.getByText('Updated Title')).toBeInTheDocument());
+    expect(screen.queryByText('Initial Title')).not.toBeInTheDocument();
+  });
+
+  it('should not update modal props when modal is not open', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    // Try to update before opening - should be ignored
+    userEvent.click(screen.getByText('Update Title'));
+
+    userEvent.click(screen.getByText('Open Modal'));
+    // Should still show initial title since update was called before open
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+  });
+
+  it('should not update modal props after modal is closed', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Close'));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    // Try to update after closing - should be ignored
+    userEvent.click(screen.getByText('Update Title'));
+
+    // Reopen modal - should show initial title, not updated title
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+  });
 });

@@ -9,6 +9,7 @@ import type {
   InferResult,
   OpenModal,
   OpenModalOptions,
+  UpdateModal,
   UseModalReturn,
 } from '../types/modal';
 import { nanoid } from '../utils/nanoid';
@@ -18,16 +19,14 @@ export default function useModal<TProps extends InjectedProps<InferResult<TProps
 ): UseModalReturn<TProps, InferResult<TProps>> {
   type TResult = InferResult<TProps>;
 
-  const { openModal, closeModal } = useContext(ModalDispatchContext);
+  const { openModal, closeModal, updateModal } = useContext(ModalDispatchContext);
   const key = useMemo(() => nanoid(), []);
 
   const close: CloseModal<TResult> = useCallback(
     (options?: CloseModalOptions<TResult>) => {
       const { key: eachKey, clearTime, result } = options ?? {};
 
-      const validKey = typeof eachKey === 'string' || typeof eachKey === 'number' ? eachKey : key;
-
-      closeModal({ key: validKey, clearTime, result });
+      closeModal({ key: eachKey ?? key, clearTime, result });
     },
     [closeModal, key]
   );
@@ -51,5 +50,12 @@ export default function useModal<TProps extends InjectedProps<InferResult<TProps
     [Component, close, key, openModal]
   );
 
-  return { open, close, key };
+  const update: UpdateModal<TProps> = useCallback(
+    (props, options) => {
+      updateModal({ key: options?.key ?? key, props });
+    },
+    [key, updateModal]
+  );
+
+  return { open, close, update, key };
 }

@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [1.8.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.7.0...v1.8.0) (2025-12-14)
+
+### ⚠ BREAKING CHANGES
+
+* Modal components now receive `close` prop instead of requiring
+manual `onClose` wiring. The `open()` function returns a Promise and no longer
+requires passing close callback. Existing modal components need to update their
+props interface from `onClose: () => void` to `close: CloseModal`.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+
+### Features
+
+* add type definitions for Promise-based modal API ([abb62cd](https://github.com/iskkiri/react-use-hook-modal/commit/abb62cd8e7198a14d5644cc512911a43ec28c297))
+* add update function to useModal for dynamic props updates ([7ecfb06](https://github.com/iskkiri/react-use-hook-modal/commit/7ecfb06daf0895279c40f6fa1c5811beb0d86ee3))
+* implement Promise-based modal open/close in ModalProvider ([3f3c49e](https://github.com/iskkiri/react-use-hook-modal/commit/3f3c49ed718ac038241d3f6de8c893606b94196a))
+
+### Documentation
+
+* update README for Promise-based modal API ([4223099](https://github.com/iskkiri/react-use-hook-modal/commit/4223099c19d2a934936b9728818c2cc6032cde02))
+
+### Refactoring
+
+* add ExtendedDialog and ModalPropsUpdate story for update example ([99454d2](https://github.com/iskkiri/react-use-hook-modal/commit/99454d23c889d8ad433810eff98b6dd94c64dcae))
+* update examples to use new Promise-based modal API ([6ea9490](https://github.com/iskkiri/react-use-hook-modal/commit/6ea9490a368e95b92f2a58b2296625af70f9fbef))
+* update React Native example to use new Promise-based API ([8cc951f](https://github.com/iskkiri/react-use-hook-modal/commit/8cc951f208c9b6c513310fc8797aebeb3326d87c))
+* update useModal to auto-inject isOpen and close props ([7b58cd0](https://github.com/iskkiri/react-use-hook-modal/commit/7b58cd0454e74da52b50dd90e77ec05f820d48c3))
+
 ## [1.7.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.1...v1.7.0) (2025-10-05)
 
 ### Features

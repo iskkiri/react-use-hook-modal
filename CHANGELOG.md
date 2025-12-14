@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.0.1](https://github.com/iskkiri/react-use-hook-modal/compare/v2.0.0...v2.0.1) (2025-12-14)
+
+### Documentation
+
+* update README with InjectedProps type and update function ([e5fac07](https://github.com/iskkiri/react-use-hook-modal/commit/e5fac074deb0dfb14feb017987f7cbad67615ff6))
+
 ## [2.0.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.8.0...v2.0.0) (2025-12-14)
 
 ### ⚠ BREAKING CHANGES

@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## [2.0.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.8.0...v2.0.0) (2025-12-14)
+
+### ⚠ BREAKING CHANGES
+
+* The modal API has been completely redesigned.
+
+- `open()` now returns a Promise that resolves when the modal closes
+- `isOpen` and `close` props are automatically injected into modal components
+- Modal components should extend `InjectedProps` type instead of receiving isOpen/close manually
+- The `update()` function has been added for dynamic prop updates
+
+Migration:
+- Change `extends CloseModal` to `extends InjectedProps`
+- Remove manual `isOpen` and `close` prop passing to `open()`
+- Use Promise return value for async workflows
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+
+### Breaking Changes
+
+* Promise-based modal API with auto-injected props ([88d35d6](https://github.com/iskkiri/react-use-hook-modal/commit/88d35d68e909ec1a2e90e79638ff44452bb6a7d2))
+
 ## [1.8.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.7.0...v1.8.0) (2025-12-14)
 
 ### ⚠ BREAKING CHANGES

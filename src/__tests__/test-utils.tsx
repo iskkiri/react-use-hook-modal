@@ -24,10 +24,11 @@ export const ModalStateProviderWrapper = (modals: ModalState[]) => {
 export const ModalDispatchProviderWrapper = (
   openModal: Mock,
   closeModal: Mock,
+  updateModal: Mock,
   clearModals: Mock
 ) => {
   const ModalDispatchProvider = ({ children }: { children: React.ReactNode }) => (
-    <ModalDispatchContext.Provider value={{ openModal, closeModal, clearModals }}>
+    <ModalDispatchContext.Provider value={{ openModal, closeModal, updateModal, clearModals }}>
       {children}
     </ModalDispatchContext.Provider>
   );

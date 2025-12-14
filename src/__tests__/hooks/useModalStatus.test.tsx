@@ -66,20 +66,20 @@ describe('useModalStatus', () => {
   });
 
   it('should reflect modal close state correctly', async () => {
-    const TestComponent = () => {
+    const useTestHooks = () => {
       const modal = useModal(() => null);
       const modalStatus = useModalStatus({ key: 'test-modal' });
       return { modal, modalStatus };
     };
 
-    const { result } = renderHook(() => TestComponent(), {
+    const { result } = renderHook(() => useTestHooks(), {
       wrapper: ({ children }) => <ModalProvider>{children}</ModalProvider>,
     });
 
     expect(result.current.modalStatus.isOpen).toBe(false);
 
     act(() => {
-      result.current.modal.open({ isOpen: true }, { key: 'test-modal' });
+      result.current.modal.open({}, { key: 'test-modal' });
     });
 
     await waitFor(() => {

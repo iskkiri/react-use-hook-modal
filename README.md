@@ -55,26 +55,79 @@ export default App = ({ children }) {
 
 ## Basic Usage
 
-To open a modal, you can use the `useModal` hook as shown below.
+To open a modal, you can use the `useModal` hook as shown below. The `isOpen` and `close` props are automatically injected into your modal component.
 
 ```tsx
 import { useModal } from 'react-use-hook-modal';
-import MyModalComponent from './MyModalComponent';
+import type { CloseModal } from 'react-use-hook-modal';
+
+// Modal component receives isOpen and close automatically
+interface MyModalProps {
+  isOpen: boolean;
+  close: CloseModal;
+  title: string;
+}
+
+const MyModalComponent = ({ isOpen, close, title }: MyModalProps) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal">
+      <h1>{title}</h1>
+      <button onClick={() => close()}>Close</button>
+    </div>
+  );
+};
 
 const MyComponent = () => {
-  const { open, close } = useModal(MyModalComponent);
+  const { open } = useModal(MyModalComponent);
 
   const onOpenModal = useCallback(() => {
-    open({
-      onClose: close,
-      onConfirm: () => {
-        console.log('Confirmed');
-        close();
-      },
-    });
-  }, []);
+    open({ title: 'Hello World' });
+  }, [open]);
 
   return <button onClick={onOpenModal}>Open Modal</button>;
+};
+```
+
+### Promise-based Modal
+
+The `open` function returns a Promise, allowing you to await the result when the modal closes.
+
+```tsx
+import { useModal } from 'react-use-hook-modal';
+import type { CloseModal } from 'react-use-hook-modal';
+
+interface ConfirmModalProps {
+  isOpen: boolean;
+  close: CloseModal<boolean>;
+  message: string;
+}
+
+const ConfirmModal = ({ isOpen, close, message }: ConfirmModalProps) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal">
+      <p>{message}</p>
+      <button onClick={() => close({ result: true })}>Confirm</button>
+      <button onClick={() => close({ result: false })}>Cancel</button>
+    </div>
+  );
+};
+
+const MyComponent = () => {
+  const { open } = useModal(ConfirmModal);
+
+  const handleDelete = async () => {
+    const confirmed = await open({ message: 'Are you sure?' });
+    if (confirmed) {
+      // User clicked Confirm
+      await deleteItem();
+    }
+  };
+
+  return <button onClick={handleDelete}>Delete</button>;
 };
 ```
 
@@ -103,21 +156,23 @@ const App = ({ children }) => {
 
 ### useModal
 
-`useModal` is a custom hook designed to manage the opening and closing of modals in a React application. It takes a modal component as input and returns two functions: `open` and `close`, which can be used to control the modal's visibility.
+`useModal` is a custom hook designed to manage the opening and closing of modals in a React application. It takes a modal component as input and returns `open`, `close`, and `key` which can be used to control the modal's visibility.
 
-| Parameter   | Type                          | Description                                                                                                   |
-| ----------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `Component` | `React.ComponentType<TProps>` | The modal component to be rendered. This component should have an `isOpen` prop that controls its visibility. |
+The hook automatically injects `isOpen` and `close` props into your modal component, so you don't need to pass them manually.
+
+| Parameter   | Type                          | Description                                                                                                                              |
+| ----------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `Component` | `React.ComponentType<TProps>` | The modal component to be rendered. This component will receive `isOpen` and `close` props automatically injected by the hook.           |
 
 #### Returns:
 
-The `useModal` hook returns the following functions:
+The `useModal` hook returns the following:
 
-| Return Value | Type                                                                                                                                                                                                    | Description                                                                                                                                                                                                                                                                                                                                            |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `open`       | `(props: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void` (if required props exist) <br> `(props?: Omit<TProps, 'isOpen'>, options?: OpenModalOptions) => void` (if all props are optional) | Opens the modal. If the modal component has required props, those props must be provided. If all props are optional, `open` can be called without any props. Additionally, you can pass options such as `key` and `portalTarget`.                                                                                                                      |
-| `close`      | `(options?: CloseModalOptions) => void`                                                                                                                                                                 | Closes the modal. Optionally accepts `CloseModalOptions` which includes `key` to close a specific modal instance and `clearTime` to override the global clearTime for this specific modal closure.                                                                                                                                                     |
-| `key`        | `string \| number`                                                                                                                                                                                      | A unique identifier for the modal. It is rarely needed, as most interactions rely on `open` and `close`. However, it can be useful in specific cases where you need to track or manage a particular modal's state manually. <br> **Note**: If you provide a custom key when opening a modal, it will be different from the key returned by `useModal`. |
+| Return Value | Type                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `open`       | `(props: Omit<TProps, 'isOpen' \| 'close'>, options?: OpenModalOptions) => Promise<TResult>` (if required props exist) <br> `(props?: Omit<TProps, 'isOpen' \| 'close'>, options?: OpenModalOptions) => Promise<TResult>` (if all props are optional) | Opens the modal and returns a Promise that resolves when the modal is closed. The resolved value is the `result` passed to the `close` function. If the modal component has required props (other than `isOpen` and `close`), those props must be provided.                                                                                            |
+| `close`      | `(options?: CloseModalOptions<TResult>) => void`                                                                                                                                                                          | Closes the modal. Optionally accepts `CloseModalOptions` which includes `key` to close a specific modal instance, `clearTime` to override the global clearTime, and `result` to resolve the Promise returned by `open`.                                                                                                                                |
+| `key`        | `string \| number`                                                                                                                                                                                                        | A unique identifier for the modal. It is rarely needed, as most interactions rely on `open` and `close`. However, it can be useful in specific cases where you need to track or manage a particular modal's state manually. <br> **Note**: If you provide a custom key when opening a modal, it will be different from the key returned by `useModal`. |
 
 #### OpenModalOptions
 
@@ -130,12 +185,13 @@ The `OpenModalOptions` is an optional parameter for the `open` function returned
 
 ### CloseModalOptions
 
-The `CloseModalOptions` is an optional parameter for the `close` function returned by `useModal`. It allows users to customize the behavior of the modal when closing.
+The `CloseModalOptions` is an optional parameter for the `close` function returned by `useModal`. It allows users to customize the behavior of the modal when closing and optionally return a result.
 
 | Option      | Type               | Description                                                                                                                                             |
 | ----------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `key`       | `string \| number` | (Optional) A unique key for identifying the modal instance to close. If not provided, closes the modal associated with the current hook.                |
 | `clearTime` | `number`           | (Optional) Override the global clearTime setting for this specific modal closure. Determines how long to wait before removing the modal from the state. |
+| `result`    | `TResult`          | (Optional or Required based on typing) The value to resolve the Promise returned by `open`. If your modal component defines `close: CloseModal<SomeType>`, then `result` becomes required when calling `close`. |
 
 ### useModalStatus
 

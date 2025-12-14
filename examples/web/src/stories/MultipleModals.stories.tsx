@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
-import useCustomModal from '@/hooks/useCustomModal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 
 import '../styles/stories.css';
+
+const CustomModal = lazy(() => import('@/components/CustomModal'));
 
 const meta = {
   title: 'Examples/MultipleModals',
@@ -26,8 +27,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   render: function Render() {
-    const [isOpen, setIsOpen] = useState(false);
-    const onOpenMultipleModals = useCallback(() => setIsOpen(true), []);
+    const [isOpenMultipleModals, setIsOpenMultipleModals] = useState(false);
+    const onOpenMultipleModals = useCallback(() => setIsOpenMultipleModals(true), []);
 
     const popUpList = useMemo(() => {
       return [...Array(3)].map((_, i) => ({
@@ -37,23 +38,15 @@ export const Example: Story = {
       }));
     }, []);
 
-    const { openCustomModal, closeCustomModal } = useCustomModal();
+    const { open: openCustomModal, close: closeCustomModal } = useModal(CustomModal);
 
     useEffect(() => {
-      if (isOpen) {
+      if (isOpenMultipleModals) {
         popUpList.forEach((popUp) => {
           openCustomModal(
             {
               title: popUp.title,
               content: popUp.content,
-              onClose: () => closeCustomModal({ key: popUp.id }),
-              onConfirm: () => {
-                console.log('Confirmed');
-                /**************************************************************************************************************************************************
-                 * To close multiple modals using the close function returned from useModal, you must use the same key that was assigned when opening each modal. *
-                 **************************************************************************************************************************************************/
-                closeCustomModal({ key: popUp.id });
-              },
               style: {
                 transform: `translate(-${(popUpList.length - popUp.id - 1) * 50}% , -${(popUpList.length - popUp.id - 1) * 50}%)`,
               },
@@ -66,9 +59,9 @@ export const Example: Story = {
             }
           );
         });
-        setIsOpen(false);
+        setIsOpenMultipleModals(false);
       }
-    }, [isOpen, closeCustomModal, openCustomModal, popUpList]);
+    }, [isOpenMultipleModals, closeCustomModal, openCustomModal, popUpList]);
 
     return (
       <button onClick={onOpenMultipleModals} className="open-button">

@@ -1,21 +1,21 @@
+import { useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
-interface BootStarpModalProps {
-  isOpen: boolean;
+import type { InjectedProps } from 'react-use-hook-modal';
+interface BootStarpModalProps extends InjectedProps<{ confirmed: boolean }> {
   title: string;
   content: string;
-  onClose: () => void;
-  onConfirm: () => void;
 }
 
-export default function BootstrapModal({
-  isOpen,
-  title,
-  content,
-  onClose,
-  onConfirm,
-}: BootStarpModalProps) {
+export default function BootstrapModal({ isOpen, title, content, close }: BootStarpModalProps) {
+  const onClose = useCallback(() => {
+    close({ result: { confirmed: false } });
+  }, [close]);
+
+  const onConfirm = useCallback(() => {
+    close({ result: { confirmed: true } });
+  }, [close]);
+
   return (
     <Modal show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
@@ -24,7 +24,7 @@ export default function BootstrapModal({
       <Modal.Body>{content}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
-          Close
+          Cancel
         </Button>
         <Button variant="primary" onClick={onConfirm}>
           Confirm

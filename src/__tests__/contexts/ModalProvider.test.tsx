@@ -4,20 +4,19 @@ import userEvent from '@testing-library/user-event';
 import ModalProvider from '../../contexts/ModalProvider';
 import useModal from '../../hooks/useModal';
 import useModalsState from '../../hooks/useModalsState';
+import type { InjectedProps } from '../../types/modal';
 
-interface TestModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface TestModalProps extends InjectedProps {
   title?: string;
 }
 
-const TestModal = ({ isOpen, onClose, title }: TestModalProps) => {
+const TestModal = ({ isOpen, close, title }: TestModalProps) => {
   if (!isOpen) return null;
 
   return (
     <div role="dialog">
       <p>{title ?? 'Test Modal'}</p>
-      <button onClick={onClose}>Close</button>
+      <button onClick={() => close()}>Close</button>
     </div>
   );
 };
@@ -25,9 +24,9 @@ const TestModal = ({ isOpen, onClose, title }: TestModalProps) => {
 describe('ModalProvider', () => {
   it('should open and close a modal properly', async () => {
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
-      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+      const onOpen = useCallback(() => open(), [open]);
 
       return <button onClick={onOpen}>Open Modal</button>;
     };
@@ -47,11 +46,11 @@ describe('ModalProvider', () => {
 
   it('should update existing modal when opened again with the same key and different props', async () => {
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpenWithTitle = useCallback(
-        (title: string) => () => open({ onClose: close, title }, { key: 'modal-1' }),
-        [close, open]
+        (title: string) => () => open({ title }, { key: 'modal-1' }),
+        [open]
       );
 
       return (
@@ -79,15 +78,15 @@ describe('ModalProvider', () => {
 
   it('should open multiple modals with the same function but different keys', async () => {
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpenFirstModal = useCallback(
-        () => open({ onClose: close, title: 'First Modal' }, { key: 'modal-1' }),
-        [close, open]
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
+        [open]
       );
       const onOpenSecondModal = useCallback(
-        () => open({ onClose: close, title: 'Second Modal' }, { key: 'modal-2' }),
-        [close, open]
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
+        [open]
       );
 
       return (
@@ -116,23 +115,15 @@ describe('ModalProvider', () => {
 
   it('should not close the modal if a different key is passed to closeModal', async () => {
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpenFirstModal = useCallback(
-        () =>
-          open(
-            { onClose: () => close({ key: 'modal-1' }), title: 'First Modal' },
-            { key: 'modal-1' }
-          ),
-        [close, open]
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
+        [open]
       );
       const onOpenSecondModal = useCallback(
-        () =>
-          open(
-            { onClose: () => close({ key: 'modal-2' }), title: 'Second Modal' },
-            { key: 'modal-2' }
-          ),
-        [close, open]
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
+        [open]
       );
 
       return (
@@ -168,11 +159,11 @@ describe('ModalProvider', () => {
     const clearTime = 1000;
 
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpen = useCallback(
-        () => open({ onClose: close, title: 'Test Modal' }),
-        [close, open]
+        () => open({ title: 'Test Modal' }),
+        [open]
       );
 
       return <button onClick={onOpen}>Open Modal</button>;
@@ -202,9 +193,9 @@ describe('ModalProvider', () => {
 
     const TestComponent = () => {
       const { modals } = useModalsState();
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
-      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+      const onOpen = useCallback(() => open(), [open]);
 
       return (
         <div>
@@ -236,9 +227,9 @@ describe('ModalProvider', () => {
   it('should call onAfterOpen when the modal is opened', async () => {
     const onAfterOpen = vi.fn();
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
-      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+      const onOpen = useCallback(() => open(), [open]);
 
       return <button onClick={onOpen}>Open Modal</button>;
     };
@@ -258,9 +249,9 @@ describe('ModalProvider', () => {
   it('should call onAfterClose when the modal is closed', async () => {
     const onAfterClose = vi.fn();
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
-      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+      const onOpen = useCallback(() => open(), [open]);
 
       return <button onClick={onOpen}>Open Modal</button>;
     };
@@ -283,9 +274,9 @@ describe('ModalProvider', () => {
     const clearTime = 1000;
 
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
-      const onOpen = useCallback(() => open({ onClose: close }), [close, open]);
+      const onOpen = useCallback(() => open(), [open]);
 
       return <button onClick={onOpen}>Open Modal</button>;
     };
@@ -314,11 +305,11 @@ describe('ModalProvider', () => {
   it('should call onAfterOpen with the opened modal state', async () => {
     const onAfterOpen = vi.fn();
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpen = useCallback(
-        () => open({ onClose: close, title: 'Opened Modal' }),
-        [close, open]
+        () => open({ title: 'Opened Modal' }),
+        [open]
       );
 
       return <button onClick={onOpen}>Open Modal</button>;
@@ -342,11 +333,11 @@ describe('ModalProvider', () => {
   it('should call onAfterClose with the closed modal state', async () => {
     const onAfterClose = vi.fn();
     const TestComponent = () => {
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModal);
 
       const onOpen = useCallback(
-        () => open({ onClose: close, title: 'Closed Modal' }),
-        [close, open]
+        () => open({ title: 'Closed Modal' }),
+        [open]
       );
 
       return <button onClick={onOpen}>Open Modal</button>;
@@ -373,14 +364,22 @@ describe('ModalProvider', () => {
     const clearTime = 1000;
     const eachClearTime = 500;
 
+    // Special modal that uses clearTime option
+    const TestModalWithClearTime = ({ isOpen, close }: InjectedProps) => {
+      if (!isOpen) return null;
+      return (
+        <div role="dialog">
+          <p>Test Modal</p>
+          <button onClick={() => close({ clearTime: eachClearTime })}>Close</button>
+        </div>
+      );
+    };
+
     const TestComponent = () => {
       const { modals } = useModalsState();
-      const { open, close } = useModal(TestModal);
+      const { open } = useModal(TestModalWithClearTime);
 
-      const onOpen = useCallback(
-        () => open({ onClose: () => close({ clearTime: eachClearTime }) }),
-        [close, open]
-      );
+      const onOpen = useCallback(() => open(), [open]);
 
       return (
         <div>
@@ -407,5 +406,143 @@ describe('ModalProvider', () => {
     await waitFor(() => expect(screen.getByText('Modals count: 0')).toBeInTheDocument(), {
       timeout: eachClearTime + 100,
     });
+  });
+
+  it('should update modal props when update is called', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Update Title'));
+    await waitFor(() => expect(screen.getByText('Updated Title')).toBeInTheDocument());
+    expect(screen.queryByText('Initial Title')).not.toBeInTheDocument();
+  });
+
+  it('should not update modal props when modal is not open', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    // Try to update before opening - should be ignored
+    userEvent.click(screen.getByText('Update Title'));
+
+    userEvent.click(screen.getByText('Open Modal'));
+    // Should still show initial title since update was called before open
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+  });
+
+  it('should not update modal props after modal is closed', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpen = useCallback(() => open({ title: 'Initial Title' }), [open]);
+      const onUpdate = useCallback(() => update({ title: 'Updated Title' }), [update]);
+
+      return (
+        <div>
+          <button onClick={onOpen}>Open Modal</button>
+          <button onClick={onUpdate}>Update Title</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Close'));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    // Try to update after closing - should be ignored
+    userEvent.click(screen.getByText('Update Title'));
+
+    // Reopen modal - should show initial title, not updated title
+    userEvent.click(screen.getByText('Open Modal'));
+    expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+  });
+
+  it('should only update the targeted modal when multiple modals are open', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpenFirst = useCallback(
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
+        [open]
+      );
+      const onOpenSecond = useCallback(
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
+        [open]
+      );
+      const onUpdateFirst = useCallback(
+        () => update({ title: 'Updated First' }, { key: 'modal-1' }),
+        [update]
+      );
+
+      return (
+        <div>
+          <button onClick={onOpenFirst}>Open First</button>
+          <button onClick={onOpenSecond}>Open Second</button>
+          <button onClick={onUpdateFirst}>Update First</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open First'));
+    expect(await screen.findByText('First Modal')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Open Second'));
+    expect(await screen.findByText('Second Modal')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Update First'));
+    await waitFor(() => expect(screen.getByText('Updated First')).toBeInTheDocument());
+
+    // Second modal should remain unchanged
+    expect(screen.getByText('Second Modal')).toBeInTheDocument();
   });
 });

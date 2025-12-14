@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
+import { lazy, useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalProvider } from 'react-use-hook-modal';
+import { ModalProvider, useModal } from 'react-use-hook-modal';
 import { Button } from 'react-bootstrap';
-import useBootstrapModal from '@/hooks/useBootstrapModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const BootstrapModal = lazy(() => import('@/components/BootstrapModal'));
 
 const meta = {
   title: 'Examples/BootstrapModal',
@@ -27,20 +28,32 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   render: function Render() {
-    const { openBootstrapModal, closeBootstrapModal } = useBootstrapModal();
+    const [result, setResult] = useState('No result yet');
+    const { open: openBootstrapModal } = useModal(BootstrapModal);
 
-    const onOpenBootstrapModal = useCallback(() => {
-      openBootstrapModal({
+    const onOpenBootstrapModal = useCallback(async () => {
+      setResult('Waiting for user...');
+
+      const { confirmed } = await openBootstrapModal({
         title: 'Bootstrap Modal',
         content: 'This is a Bootstrap Modal',
-        onClose: closeBootstrapModal,
-        onConfirm: () => {
-          console.log('Confirmed');
-          closeBootstrapModal();
-        },
       });
-    }, [closeBootstrapModal, openBootstrapModal]);
 
-    return <Button onClick={onOpenBootstrapModal}>Open Bootstrap Modal</Button>;
+      if (confirmed) {
+        setResult('User confirmed! ✅');
+      } else {
+        setResult('User cancelled! ❌');
+      }
+    }, [openBootstrapModal]);
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Button onClick={onOpenBootstrapModal}>Open Bootstrap Modal</Button>
+
+        <p style={{ marginTop: '20px', fontSize: '18px' }}>
+          Result: <strong>{result}</strong>
+        </p>
+      </div>
+    );
   },
 };

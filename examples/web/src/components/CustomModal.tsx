@@ -1,22 +1,22 @@
+import { useCallback } from 'react';
 import '../styles/custom-modal.css';
+import type { InjectedProps } from 'react-use-hook-modal';
 
-interface CustomModalProps {
-  isOpen: boolean;
+interface CustomModalProps extends InjectedProps<{ confirmed: boolean }> {
   title: string;
   content: string;
-  onClose: () => void;
-  onConfirm: () => void;
   style?: React.CSSProperties;
 }
 
-export default function CustomModal({
-  isOpen,
-  title,
-  content,
-  onClose,
-  onConfirm,
-  style,
-}: CustomModalProps) {
+export default function CustomModal({ isOpen, title, content, style, close }: CustomModalProps) {
+  const onClose = useCallback(() => {
+    close({ result: { confirmed: false } });
+  }, [close]);
+
+  const onConfirm = useCallback(() => {
+    close({ result: { confirmed: true } });
+  }, [close]);
+
   return (
     <>
       {isOpen && (
@@ -28,7 +28,7 @@ export default function CustomModal({
 
             <div className="custom-button-container">
               <button className="close-button" onClick={onClose}>
-                Close
+                Cancel
               </button>
 
               <button className="confirm-button" onClick={onConfirm}>

@@ -48,6 +48,11 @@
   cursor: pointer;
 }
 
+.close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .confirm-button {
   padding: 10px 20px;
   border: none;
@@ -55,4 +60,9 @@
   color: white;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.confirm-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -1,4 +1,6 @@
+import { useCallback } from 'react';
 import Modal from 'react-modal';
+import type { InjectedProps } from 'react-use-hook-modal';
 
 import '../styles/react-modal.css';
 
@@ -8,21 +10,20 @@ const customStyles = {
   },
 };
 
-interface ReactModalProps {
-  isOpen: boolean;
+interface ReactModalProps extends InjectedProps<{ confirmed: boolean }> {
   title: string;
   content: string;
-  onClose: () => void;
-  onConfirm: () => void;
 }
 
-export default function ReactModal({
-  title,
-  content,
-  isOpen,
-  onClose,
-  onConfirm,
-}: ReactModalProps) {
+export default function ReactModal({ title, content, isOpen, close }: ReactModalProps) {
+  const onClose = useCallback(() => {
+    close({ result: { confirmed: false } });
+  }, [close]);
+
+  const onConfirm = useCallback(() => {
+    close({ result: { confirmed: true } });
+  }, [close]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -37,7 +38,7 @@ export default function ReactModal({
 
       <div className="button-container">
         <button className="close-button" onClick={onClose}>
-          Close
+          Cancel
         </button>
 
         <button className="confirm-button" onClick={onConfirm}>

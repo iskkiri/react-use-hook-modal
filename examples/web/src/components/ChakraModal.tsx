@@ -8,22 +8,23 @@ import {
   ModalCloseButton,
   Button,
 } from '@chakra-ui/react';
+import { useCallback } from 'react';
+import type { InjectedProps } from 'react-use-hook-modal';
 
-interface ChakraModalProps {
-  isOpen: boolean;
+interface ChakraModalProps extends InjectedProps<{ confirmed: boolean }> {
   title: string;
   content: string;
-  onClose: () => void;
-  onConfirm: () => void;
 }
 
-export default function ChakraModal({
-  title,
-  content,
-  isOpen,
-  onClose,
-  onConfirm,
-}: ChakraModalProps) {
+export default function ChakraModal({ title, content, isOpen, close }: ChakraModalProps) {
+  const onClose = useCallback(() => {
+    close({ result: { confirmed: false } });
+  }, [close]);
+
+  const onConfirm = useCallback(() => {
+    close({ result: { confirmed: true } });
+  }, [close]);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
@@ -34,10 +35,10 @@ export default function ChakraModal({
         <ModalBody>{content}</ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={() => onClose()}>
-            Close
+          <Button colorScheme="gray" mr={3} onClick={onClose}>
+            Cancel
           </Button>
-          <Button variant="ghost" onClick={onConfirm}>
+          <Button colorScheme="blue" onClick={onConfirm}>
             Confirm
           </Button>
         </ModalFooter>

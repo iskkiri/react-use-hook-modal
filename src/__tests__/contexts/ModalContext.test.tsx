@@ -44,6 +44,14 @@ describe('ModalDispatchContext', () => {
     );
   });
 
+  it('should throw an error when updateModal is called without ModalProvider', () => {
+    const { result } = renderHook(() => useContext(ModalDispatchContext));
+
+    expect(() => result.current.updateModal({ key: testModalKey, props: {} })).toThrowError(
+      'ModalProvider is missing or useModal must be called within a ModalProvider. Please ensure that your component is wrapped within <ModalProvider>.'
+    );
+  });
+
   it('should throw an error when clearModals is called without ModalProvider', () => {
     const { result } = renderHook(() => useContext(ModalDispatchContext));
 

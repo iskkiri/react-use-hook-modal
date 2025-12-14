@@ -4,11 +4,9 @@ import userEvent from '@testing-library/user-event';
 import ModalProvider from '../../contexts/ModalProvider';
 import useModal from '../../hooks/useModal';
 import useModalsState from '../../hooks/useModalsState';
-import type { CloseModal } from '../../types/modal';
+import type { InjectedProps } from '../../types/modal';
 
-interface TestModalProps {
-  isOpen: boolean;
-  close: CloseModal;
+interface TestModalProps extends InjectedProps {
   title?: string;
 }
 
@@ -367,13 +365,7 @@ describe('ModalProvider', () => {
     const eachClearTime = 500;
 
     // Special modal that uses clearTime option
-    const TestModalWithClearTime = ({
-      isOpen,
-      close,
-    }: {
-      isOpen: boolean;
-      close: CloseModal;
-    }) => {
+    const TestModalWithClearTime = ({ isOpen, close }: InjectedProps) => {
       if (!isOpen) return null;
       return (
         <div role="dialog">
@@ -507,5 +499,50 @@ describe('ModalProvider', () => {
     // Reopen modal - should show initial title, not updated title
     userEvent.click(screen.getByText('Open Modal'));
     expect(await screen.findByText('Initial Title')).toBeInTheDocument();
+  });
+
+  it('should only update the targeted modal when multiple modals are open', async () => {
+    const TestComponent = () => {
+      const { open, update } = useModal(TestModal);
+
+      const onOpenFirst = useCallback(
+        () => open({ title: 'First Modal' }, { key: 'modal-1' }),
+        [open]
+      );
+      const onOpenSecond = useCallback(
+        () => open({ title: 'Second Modal' }, { key: 'modal-2' }),
+        [open]
+      );
+      const onUpdateFirst = useCallback(
+        () => update({ title: 'Updated First' }, { key: 'modal-1' }),
+        [update]
+      );
+
+      return (
+        <div>
+          <button onClick={onOpenFirst}>Open First</button>
+          <button onClick={onOpenSecond}>Open Second</button>
+          <button onClick={onUpdateFirst}>Update First</button>
+        </div>
+      );
+    };
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    userEvent.click(screen.getByText('Open First'));
+    expect(await screen.findByText('First Modal')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Open Second'));
+    expect(await screen.findByText('Second Modal')).toBeInTheDocument();
+
+    userEvent.click(screen.getByText('Update First'));
+    await waitFor(() => expect(screen.getByText('Updated First')).toBeInTheDocument());
+
+    // Second modal should remain unchanged
+    expect(screen.getByText('Second Modal')).toBeInTheDocument();
   });
 });

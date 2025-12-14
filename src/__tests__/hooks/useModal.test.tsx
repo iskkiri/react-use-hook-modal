@@ -18,6 +18,10 @@ describe('useModal', () => {
 
   const wrapper = ModalDispatchProviderWrapper(mockOpenModal, mockCloseModal, mockUpdateModal, mockClearModals);
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('should open the modal when open is called', () => {
     const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
 
@@ -85,6 +89,17 @@ describe('useModal', () => {
 
     expect(mockUpdateModal).toHaveBeenCalledWith({
       key: expect.any(String),
+      props: { title: 'Updated Title' },
+    });
+  });
+
+  it('should call updateModal with the provided key if specified', () => {
+    const { result } = renderHook(() => useModal(TestModalComponent), { wrapper });
+
+    act(() => result.current.update({ title: 'Updated Title' }, { key: 'custom-key' }));
+
+    expect(mockUpdateModal).toHaveBeenCalledWith({
+      key: 'custom-key',
       props: { title: 'Updated Title' },
     });
   });

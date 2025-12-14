@@ -5,11 +5,9 @@ import ModalProvider from '../../contexts/ModalProvider';
 import useModal from '../../hooks/useModal';
 import useClearModals from '../../hooks/useClearModals';
 import useModalsState from '../../hooks/useModalsState';
-import type { CloseModal } from '../../types/modal';
+import type { InjectedProps } from '../../types/modal';
 
-interface TestModalProps {
-  isOpen: boolean;
-  close: CloseModal;
+interface TestModalProps extends InjectedProps {
   title?: string;
 }
 

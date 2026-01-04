@@ -1,4 +1,4 @@
 packages:
-  - 'src'
+  - '.'
   - 'examples/web'
   - 'examples/react-native'

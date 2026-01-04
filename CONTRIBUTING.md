@@ -21,21 +21,30 @@ Fork the repository and create a branch for your feature/bug fix.
 - Update the README.md file if necessary.
 - Ensure that your commits follow the conventions outlined in the next section.
 
-## Commit Message Conventions
+## Changesets
 
-- We use semantic-release to manage releases automatically. To ensure that releases are automatically versioned correctly, we follow the Conventional Commits Conventions. This means that your commit messages should have the following format:
-  \<type>: \<subject>
+We use [Changesets](https://github.com/changesets/changesets) to manage releases. When you make changes that should be released, you need to create a changeset file.
 
-Here's what each part of the commit message means:
+### Creating a Changeset
 
-- \<type>: The type of change that you’re committing. Valid types include:
-  - feat: For new features
-  - refactor: For restructuring existing code without changing its external behavior (e.g. code cleanup or optimization)
-  - fix: For bug fixes
-  - docs: For documentation changes
-  - chore: For changes that don’t affect the code itself (e.g. updating dependencies)
-  - test: For adding or updating tests
-- \<subject>: A short description of the change.
+After making your changes, run:
+
+```shell
+pnpm changeset
+```
+
+This will prompt you to:
+
+1. Select the type of version bump (major, minor, or patch)
+2. Write a summary of the changes
+
+The changeset file will be created in the `.changeset` directory and should be committed with your PR.
+
+### Version Bump Guidelines
+
+- **major**: Breaking changes that require users to update their code
+- **minor**: New features that are backwards-compatible
+- **patch**: Bug fixes and documentation changes
 
 ## Code Style and Linting
 

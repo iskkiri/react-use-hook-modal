@@ -1,23 +1,30 @@
 # CHANGELOG
 
+## 2.0.2
+
+### Patch Changes
+
+- [#5](https://github.com/iskkiri/react-use-hook-modal/pull/5) [`f349ea2`](https://github.com/iskkiri/react-use-hook-modal/commit/f349ea28ac70563cc1eb8ed6eaa903a82efa4c01) Thanks [@iskkiri](https://github.com/iskkiri)! - Update CONTRIBUTING.md for Changesets workflow
+
 ## [2.0.1](https://github.com/iskkiri/react-use-hook-modal/compare/v2.0.0...v2.0.1) (2025-12-14)
 
 ### Documentation
 
-* update README with InjectedProps type and update function ([e5fac07](https://github.com/iskkiri/react-use-hook-modal/commit/e5fac074deb0dfb14feb017987f7cbad67615ff6))
+- update README with InjectedProps type and update function ([e5fac07](https://github.com/iskkiri/react-use-hook-modal/commit/e5fac074deb0dfb14feb017987f7cbad67615ff6))
 
 ## [2.0.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.8.0...v2.0.0) (2025-12-14)
 
 ### ⚠ BREAKING CHANGES
 
-* The modal API has been completely redesigned.
+- The modal API has been completely redesigned.
 
-- `open()` now returns a Promise that resolves when the modal closes
-- `isOpen` and `close` props are automatically injected into modal components
-- Modal components should extend `InjectedProps` type instead of receiving isOpen/close manually
-- The `update()` function has been added for dynamic prop updates
+* `open()` now returns a Promise that resolves when the modal closes
+* `isOpen` and `close` props are automatically injected into modal components
+* Modal components should extend `InjectedProps` type instead of receiving isOpen/close manually
+* The `update()` function has been added for dynamic prop updates
 
 Migration:
+
 - Change `extends CloseModal` to `extends InjectedProps`
 - Remove manual `isOpen` and `close` prop passing to `open()`
 - Use Promise return value for async workflows
@@ -28,16 +35,16 @@ Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 
 ### Breaking Changes
 
-* Promise-based modal API with auto-injected props ([88d35d6](https://github.com/iskkiri/react-use-hook-modal/commit/88d35d68e909ec1a2e90e79638ff44452bb6a7d2))
+- Promise-based modal API with auto-injected props ([88d35d6](https://github.com/iskkiri/react-use-hook-modal/commit/88d35d68e909ec1a2e90e79638ff44452bb6a7d2))
 
 ## [1.8.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.7.0...v1.8.0) (2025-12-14)
 
 ### ⚠ BREAKING CHANGES
 
-* Modal components now receive `close` prop instead of requiring
-manual `onClose` wiring. The `open()` function returns a Promise and no longer
-requires passing close callback. Existing modal components need to update their
-props interface from `onClose: () => void` to `close: CloseModal`.
+- Modal components now receive `close` prop instead of requiring
+  manual `onClose` wiring. The `open()` function returns a Promise and no longer
+  requires passing close callback. Existing modal components need to update their
+  props interface from `onClose: () => void` to `close: CloseModal`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
@@ -45,109 +52,109 @@ Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 
 ### Features
 
-* add type definitions for Promise-based modal API ([abb62cd](https://github.com/iskkiri/react-use-hook-modal/commit/abb62cd8e7198a14d5644cc512911a43ec28c297))
-* add update function to useModal for dynamic props updates ([7ecfb06](https://github.com/iskkiri/react-use-hook-modal/commit/7ecfb06daf0895279c40f6fa1c5811beb0d86ee3))
-* implement Promise-based modal open/close in ModalProvider ([3f3c49e](https://github.com/iskkiri/react-use-hook-modal/commit/3f3c49ed718ac038241d3f6de8c893606b94196a))
+- add type definitions for Promise-based modal API ([abb62cd](https://github.com/iskkiri/react-use-hook-modal/commit/abb62cd8e7198a14d5644cc512911a43ec28c297))
+- add update function to useModal for dynamic props updates ([7ecfb06](https://github.com/iskkiri/react-use-hook-modal/commit/7ecfb06daf0895279c40f6fa1c5811beb0d86ee3))
+- implement Promise-based modal open/close in ModalProvider ([3f3c49e](https://github.com/iskkiri/react-use-hook-modal/commit/3f3c49ed718ac038241d3f6de8c893606b94196a))
 
 ### Documentation
 
-* update README for Promise-based modal API ([4223099](https://github.com/iskkiri/react-use-hook-modal/commit/4223099c19d2a934936b9728818c2cc6032cde02))
+- update README for Promise-based modal API ([4223099](https://github.com/iskkiri/react-use-hook-modal/commit/4223099c19d2a934936b9728818c2cc6032cde02))
 
 ### Refactoring
 
-* add ExtendedDialog and ModalPropsUpdate story for update example ([99454d2](https://github.com/iskkiri/react-use-hook-modal/commit/99454d23c889d8ad433810eff98b6dd94c64dcae))
-* update examples to use new Promise-based modal API ([6ea9490](https://github.com/iskkiri/react-use-hook-modal/commit/6ea9490a368e95b92f2a58b2296625af70f9fbef))
-* update React Native example to use new Promise-based API ([8cc951f](https://github.com/iskkiri/react-use-hook-modal/commit/8cc951f208c9b6c513310fc8797aebeb3326d87c))
-* update useModal to auto-inject isOpen and close props ([7b58cd0](https://github.com/iskkiri/react-use-hook-modal/commit/7b58cd0454e74da52b50dd90e77ec05f820d48c3))
+- add ExtendedDialog and ModalPropsUpdate story for update example ([99454d2](https://github.com/iskkiri/react-use-hook-modal/commit/99454d23c889d8ad433810eff98b6dd94c64dcae))
+- update examples to use new Promise-based modal API ([6ea9490](https://github.com/iskkiri/react-use-hook-modal/commit/6ea9490a368e95b92f2a58b2296625af70f9fbef))
+- update React Native example to use new Promise-based API ([8cc951f](https://github.com/iskkiri/react-use-hook-modal/commit/8cc951f208c9b6c513310fc8797aebeb3326d87c))
+- update useModal to auto-inject isOpen and close props ([7b58cd0](https://github.com/iskkiri/react-use-hook-modal/commit/7b58cd0454e74da52b50dd90e77ec05f820d48c3))
 
 ## [1.7.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.1...v1.7.0) (2025-10-05)
 
 ### Features
 
-* add React Native support by replacing DOM-specific dependencies ([00dfefd](https://github.com/iskkiri/react-use-hook-modal/commit/00dfefd07454bef45dade959db91a65db100c9cd))
+- add React Native support by replacing DOM-specific dependencies ([00dfefd](https://github.com/iskkiri/react-use-hook-modal/commit/00dfefd07454bef45dade959db91a65db100c9cd))
 
 ### Refactoring
 
-* restructure examples into separate web and react-native workspaces ([479597a](https://github.com/iskkiri/react-use-hook-modal/commit/479597a06b95640218d085d44dbe26245574a2e6))
+- restructure examples into separate web and react-native workspaces ([479597a](https://github.com/iskkiri/react-use-hook-modal/commit/479597a06b95640218d085d44dbe26245574a2e6))
 
 ## [1.6.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.6.0...v1.6.1) (2025-04-09)
 
 ### Refactoring
 
-* enhance type inference for union types in useModal hook ([c45329b](https://github.com/iskkiri/react-use-hook-modal/commit/c45329b7a356c98b6a922dcf13dfaf245324cccc))
+- enhance type inference for union types in useModal hook ([c45329b](https://github.com/iskkiri/react-use-hook-modal/commit/c45329b7a356c98b6a922dcf13dfaf245324cccc))
 
 ## [1.6.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.5.0...v1.6.0) (2025-04-06)
 
 ### Features
 
-* add useModalStatus hook for monitoring modal state ([64130f6](https://github.com/iskkiri/react-use-hook-modal/commit/64130f68ce6806168ba0e3b2de46ee5d3bca697e))
+- add useModalStatus hook for monitoring modal state ([64130f6](https://github.com/iskkiri/react-use-hook-modal/commit/64130f68ce6806168ba0e3b2de46ee5d3bca697e))
 
 ## [1.5.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.1...v1.5.0) (2025-03-30)
 
 ### Features
 
-* add per-modal clearTime override option ([5fb48f5](https://github.com/iskkiri/react-use-hook-modal/commit/5fb48f5b5a943bc210df0a78af271de37071b66a))
+- add per-modal clearTime override option ([5fb48f5](https://github.com/iskkiri/react-use-hook-modal/commit/5fb48f5b5a943bc210df0a78af271de37071b66a))
 
 ## [1.4.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.4.0...v1.4.1) (2024-11-05)
 
 ### Documentation
 
-* rename test.yml to test.yaml ([e00d900](https://github.com/iskkiri/react-use-hook-modal/commit/e00d90068331ed858bfea025bd03ff39e4fbc778))
+- rename test.yml to test.yaml ([e00d900](https://github.com/iskkiri/react-use-hook-modal/commit/e00d90068331ed858bfea025bd03ff39e4fbc778))
 
 ## [1.4.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.1...v1.4.0) (2024-11-04)
 
 ### Features
 
-* pnpm workspace settings ([e9be04f](https://github.com/iskkiri/react-use-hook-modal/commit/e9be04f7f10a9c4423914304aded7d34a2f2f475))
+- pnpm workspace settings ([e9be04f](https://github.com/iskkiri/react-use-hook-modal/commit/e9be04f7f10a9c4423914304aded7d34a2f2f475))
 
 ## [1.3.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.3.0...v1.3.1) (2024-11-03)
 
 ### Refactoring
 
-* refactoring the type of OpenParams ([f19df57](https://github.com/iskkiri/react-use-hook-modal/commit/f19df57e63ac3e47426e7a1c4d60e7021e0b67ef))
+- refactoring the type of OpenParams ([f19df57](https://github.com/iskkiri/react-use-hook-modal/commit/f19df57e63ac3e47426e7a1c4d60e7021e0b67ef))
 
 ## [1.3.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.2.0...v1.3.0) (2024-10-31)
 
 ### Features
 
-* add clearModals hook ([027ae77](https://github.com/iskkiri/react-use-hook-modal/commit/027ae77ace9f1e21ae57b92f2ea21fb45878b7ed))
-* update README ([39d4fc7](https://github.com/iskkiri/react-use-hook-modal/commit/39d4fc7f8c47df9863ab4d578553f7875c308a85))
+- add clearModals hook ([027ae77](https://github.com/iskkiri/react-use-hook-modal/commit/027ae77ace9f1e21ae57b92f2ea21fb45878b7ed))
+- update README ([39d4fc7](https://github.com/iskkiri/react-use-hook-modal/commit/39d4fc7f8c47df9863ab4d578553f7875c308a85))
 
 ## [1.2.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.1.1...v1.2.0) (2024-10-20)
 
 ### Features
 
-* add key to the return value of useModal ([346c40c](https://github.com/iskkiri/react-use-hook-modal/commit/346c40cae01627a7f6a7296dc27529d4cb21d9fd))
+- add key to the return value of useModal ([346c40c](https://github.com/iskkiri/react-use-hook-modal/commit/346c40cae01627a7f6a7296dc27529d4cb21d9fd))
 
 ## [1.1.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.1.0...v1.1.1) (2024-10-15)
 
 ### Documentation
 
-* add examples to demonstrate usage ([3bc7413](https://github.com/iskkiri/react-use-hook-modal/commit/3bc7413f3a74251df0a2df5600255e12c3803955))
+- add examples to demonstrate usage ([3bc7413](https://github.com/iskkiri/react-use-hook-modal/commit/3bc7413f3a74251df0a2df5600255e12c3803955))
 
 ## [1.1.0](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.3...v1.1.0) (2024-10-14)
 
 ### Features
 
-* add onAfterOpen and onAfterClose callbacks to ModalProvider ([3e1bbed](https://github.com/iskkiri/react-use-hook-modal/commit/3e1bbedada19744da83011369c3c8b5858d42714))
+- add onAfterOpen and onAfterClose callbacks to ModalProvider ([3e1bbed](https://github.com/iskkiri/react-use-hook-modal/commit/3e1bbedada19744da83011369c3c8b5858d42714))
 
 ## [1.0.3](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.2...v1.0.3) (2024-10-13)
 
 ### Documentation
 
-* update README.md - CONTRIBUTING.md link ([c1b42b5](https://github.com/iskkiri/react-use-hook-modal/commit/c1b42b5bb8ac5c27ce320db33978db76c9d59276))
+- update README.md - CONTRIBUTING.md link ([c1b42b5](https://github.com/iskkiri/react-use-hook-modal/commit/c1b42b5bb8ac5c27ce320db33978db76c9d59276))
 
 ## [1.0.2](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.1...v1.0.2) (2024-10-13)
 
 ### Bug Fixes
 
-* ModalProvider container type ([41c1edc](https://github.com/iskkiri/react-use-hook-modal/commit/41c1edc6be0ca3543db89e26301a3a6a8cba4d60))
+- ModalProvider container type ([41c1edc](https://github.com/iskkiri/react-use-hook-modal/commit/41c1edc6be0ca3543db89e26301a3a6a8cba4d60))
 
 ## [1.0.1](https://github.com/iskkiri/react-use-hook-modal/compare/v1.0.0...v1.0.1) (2024-10-13)
 
 ### Documentation
 
-* update CHANGELOG.md (duplicated v1.0.0) ([5f1c6fe](https://github.com/iskkiri/react-use-hook-modal/commit/5f1c6fe5a596155975f203d9574b941b327ab879))
+- update CHANGELOG.md (duplicated v1.0.0) ([5f1c6fe](https://github.com/iskkiri/react-use-hook-modal/commit/5f1c6fe5a596155975f203d9574b941b327ab879))
 
 ## 1.0.0 (2024-10-13)
 
